@@ -1,0 +1,130 @@
+
+
+/* CSS cho trang admin với hậu tố 'ad' để tránh trùng lặp */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.containerad {
+    background-color: #fff;
+    border-radius: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+    position: relative;
+    overflow: hidden;
+    width: 95vw;
+    max-width: 100%;
+    min-height: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    display: flex;  
+}
+
+nav ul {
+    list-style: none; 
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    margin: 15px 0; 
+    padding: 10px 0; 
+    text-align: center; 
+}
+
+nav ul hr {
+    border: none; /* Xóa viền mặc định */
+    height: 1px;
+    background-color: #ccc; /* Màu sắc đường kẻ */
+    margin: 10px 0; /* Cách đều các phần */
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    display: block; /* Giúp toàn bộ vùng li trở thành vùng click */
+    padding: 8px 0; /* Tăng khoảng cách giữa nội dung và viền */
+}
+
+
+
+.sidebarad {
+    width: 200px;
+    flex-basis: 250px;
+    background-color: rgb(255, 178, 178);
+    color: white;
+    padding: 20px;
+    flex-shrink: 0;
+    border-radius: 30px;
+}
+
+.sidebarad a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.main-contentad {
+    padding: 20px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.contentad {
+    display: none;
+}
+
+.contentad.activead {
+    display: block;
+}
+
+.containerad button {
+    background-color: #f10909;
+    color: #fff;
+    font-size: 14px;
+    padding: 10px 20px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.containerad .delete-btn {
+    background-color: #f10909;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 14px;
+    padding: 8px 15px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.containerad table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.containerad th, .containerad td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.containerad th {
+    background-color: #f4f4f4;
+}
+.main-contentad form input {
+    height: 50px;
+    width: 150px;
+    padding-left: 20px;
+    border-radius: 30px;
+
+}

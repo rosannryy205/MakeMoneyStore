@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <link rel="stylesheet" href="../public/css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abel&family=Dosis:wght@200..800&display=swap" rel="stylesheet">
+    <script src="../public/js/details.js"></script>
+</head>
+<body>
+    <div class="container">
+    <!-- START HEADER -->
+        <header>
+            <div class="top_header">
+                <div class="left_logo">
+                    <img src="../public/image/converse_logo.svg" alt="" width="110px" height="14px">
+                </div>
+                <div class="mid_logo">
+                    <img src="../public/image/logocenter.png" alt="" width="160px" height="100px">
+                </div>
+                <div class="icon_top_header">
+                    <a style="color: black;" href=""><i class="fa-solid fa-magnifying-glass fa-xl"></i></a>
+                    <a style="color: black;" href="login.html"><i class="fa-solid fa-user fa-xl"></i></a>
+                    <a style="color: black;" href="cart.html"><i class="fa-solid fa-cart-shopping fa-xl"></i></a>
+                </div>
+            </div>
+            <nav>
+                <div class="menu">
+                    <a href="index.html">Trang Chủ</a>
+                    <a href="">Giày Sneaker</a>
+                    <a href="">Quần Áo</a>
+                    <a href="">Nón/Mini bag</a>
+                    <a href="">Phụ Kiện Chính Hãng</a>
+                    <a href=""><strong>BIG SALE</strong></a>
+                    <a href="">Tra Cứu Đơn Hàng</a>
+                    <a href="">Chính Sách Khánh Hàng</a>
+                    <a href="">Địa Chỉ</a>
+                    <a href="">Về Chúng Tôi</a>
+                </div>
+            </nav>
+        </header>
+    <!-- END HEADER -->    
+        <div class="info_product">
+            <a href="">Trang chủ</a>
+            <a href="">Giỏ hàng</a>
+        </div>
+    <!-- START CART -->
+        <div class="header_cart">
+            <h1> Giỏ hàng của bạn</h1>
+        </div>
+        <div class="main_cart">
+            <div class="item_cart">
+                <img src="../public/image/img_5180_ec359f2c87cd44ee8f6bf5159b752566_master.webp" alt="" width="100px" height="100px">
+                <div class="in4_item">
+                    <h3>Giày Converse Chuck Taylor All Star Moto High Top A08005C</h3>
+                    <span>999,000₫</span>
+                    <span>3.5 UK - 36 EUR - 22.5 cm</span>
+                    <div class="plus">
+                        <input style="width: 25px; height: 25px;" type="button" value="-" onclick="decrement()">
+                        <input style="width: 50px; height: 25px;" type="text" id="number" value="1" min="1">
+                        <input style="width: 25px; height: 25px;" type="button" value="+" onclick="increment()">
+                    </div>
+                </div>
+                <div class="delete">
+                    <i class="fa-solid fa-trash fa-xl"></i>
+                    <h4>999,000đ</h4>
+                </div>
+            </div>
+            <div class="item_cart">
+                <img src="../public/image/img_5180_ec359f2c87cd44ee8f6bf5159b752566_master.webp" alt="" width="100px" height="100px">
+                <div class="in4_item">
+                    <h3>Giày Converse Chuck Taylor All Star Moto High Top A08005C</h3>
+                    <span>999,000₫</span>
+                    <span>3.5 UK - 36 EUR - 22.5 cm</span>
+                    <div class="plus">
+                        <input style="width: 25px; height: 25px;" type="button" value="-" onclick="decrement()">
+                        <input style="width: 50px; height: 25px;" type="text" id="number" value="1" min="1">
+                        <input style="width: 25px; height: 25px;" type="button" value="+" onclick="increment()">
+                    </div>
+                </div>
+                <div class="delete">
+                    <i class="fa-solid fa-trash fa-xl"></i>
+                    <h4>999,000đ</h4>
+                </div>
+            </div>
+        </div>
+        <div class="footer_cart">
+            <textarea name="ghichu" id="" style="height: 200px; width: 500px; padding: 10px; background-color: whitesmoke;" placeholder="Ghi chú"></textarea>
+            <div class="tong_tien">
+                <span style="margin: 0; padding: 0;">Tổng tiền:</span><h1>1,109,000đ</h1>
+                <span><input type="checkbox"> Tôi đồng ý với các điều khoản và các chính sách khác</span>
+                <div class="button_cart">
+                    <button style="height: 50px; width: 250px;">TIẾP TỤC MUA HÀNG</button>
+                    <button style="height: 50px; width: 130px;">CẬP NHẬT</button>
+                    <button style="height: 50px; width: 180px;">THANH TOÁN</button>
+                </div> 
+            </div>
+        </div>
+    <!-- END CART -->
+        <div class="email">
+            <div><i style="padding-right: 10px;" class="fa-solid fa-envelope fa-xl"></i> Thông tin Big Sale</div>
+            <div><input type="text" placeholder="Nhập địa chỉ email của bạn"><button>Đăng Ký</button></div>
+            <div><i style="padding-right: 10px;" class="fa-solid fa-phone fa-xl"></i>Hỗ trợ mua hàng: <a style="color: red;" href="">0964006257</a></div>
+        </div>
+
+<!-- START FOOTER -->
+    <footer>
+        <div class="content_footer">
+            <div class="intro info">
+                <p>Giới thiệu</p>
+                <span>KCONS.VN Official Site là đối tác chính thức của Converse Vietnam/ New Balance Vietnam.</span>
+            </div>
+            <div class="link info">
+                <p>Liên kết</p>
+                <ul>
+                    <li><a href="">Phương thức thanh toán</a></li>
+                    <li><a href="">Chính sách bảo mật thanh toán</a></li>
+                    <li><a href="">Chính sách vận chuyển</a></li>
+                    <li><a href="">Quy trình cung cấp dịch vụ</a></li>
+                    <li><a href="">Chính sách bảo mật khách hàng</a></li>
+                    <li><a href="">Chính sách đổi trả</a></li>
+                </ul>
+            </div>
+            <div class="location info">
+                <p>CÔNG TY TNHH MTV TMDV VT TỪ ĐỨC - MST: 1801377715</p>
+                <table cellspacing="10px">
+                    <tr>
+                        <td><i class="fa-solid fa-location-dot fa-lg"></i></td>
+                        <td><span>Văn phòng đại diện: 4/2/74 Bùi Thị Xuân, Phường Thới Bình, Quận Ninh Kiều, Thành phố Cần Thơ, Việt Nam</span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa-solid fa-tty fa-lg"></i></td>
+                        <td>0964006257</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa-solid fa-building fa-lg"></i></td>
+                        <td>Chi nhánh: 76A Đinh Tiên Hoàng, Quận Ninh Kiều, Tp Cần Thơ. Chi nhánh: 317 Nguyễn Thiện Thuật, Phường 1, Quận 3, Tp HCM.</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa-solid fa-paper-plane fa-lg"></i></td>
+                        <td><span>cskh@kcons.vn</span></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="social info">
+                <p>Introduction</p>
+                <iframe width="300px" height="200" src="https://www.youtube.com/embed/cH3Oqb81Dqo?si=h5sCIlAsbh85JYTu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="copyright">
+            <div class="copyright_content"><p>Copyright © 2024 KCONS.VN Official Site. Powered by Haravan</p></div>
+        </div>
+    </footer>
+<!-- END FOOTER -->
+</div>
+</body>
+</html>
