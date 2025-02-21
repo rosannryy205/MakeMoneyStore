@@ -11,7 +11,7 @@
     <?php if (!empty($cart)): ?>
         <?php foreach ($cart as $c): ?>
             <div class="item_cart">
-                <img src="<?= _WEB_ROOT_ ?>/public/image_product/<?= $c['image_url'] ?>" alt="" width="100px" height="100px">
+                <img src="<?= _WEB_ROOT_ ?>/public/image_product/<?= $c['image'] ?>" alt="" width="100px" height="100px">
                 <div class="in4_item">
                     <h3><?= $c['name'] ?></h3>
                     <span><?= number_format($c['price'], 0, ',', '.') ?> đ</span>

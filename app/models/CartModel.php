@@ -101,7 +101,7 @@ class CartModel extends Model
     }
 
     public function getProductInCart($user_id){
-        $sql = "SELECT c.id, p.id AS product_id, p.name, p.image_url, p.price, cd.quantity 
+        $sql = "SELECT c.id, p.id AS product_id, p.name, p.image, p.price, cd.quantity 
         FROM carts c 
         INNER JOIN cart_detail cd ON c.id = cd.id 
         INNER JOIN products p ON p.id = cd.product_id 

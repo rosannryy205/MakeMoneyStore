@@ -23,11 +23,12 @@
                         <span>Trả sau <span style="color: aqua;">499.500đ</span> x2 với</span><img src="https://assets.fundiin.vn/merchant/logo_transparent.png" alt="">
                     </div>
                     <div class="size_products_details">
-                        <?php foreach ($productSizes as $size): ?>
-                            <a href="#" onclick="selectSize(this)">
-                                <div class="size_details"><?= $size['size'] ?></div>
-                            </a>
-                        <?php endforeach; ?>
+                        <select name="" id="">
+                            <option value="">-- Chọn danh mục --</option>
+                            <?php foreach ($productSizes as $ps): ?>
+                                <option value="<?= $ps['id'] ?>"><?= $ps['size'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                     <!-- <div class="plus">
                         <input style="width: 25px; height: 25px;" type="button" value="-" onclick="decrement()">

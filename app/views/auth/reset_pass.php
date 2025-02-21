@@ -6,14 +6,19 @@
         <input type="text" id="new_password" name="new_password" placeholder="Nhập mật khẩu mới">
         <label for="email">Xác nhận mật khẩu</label>
         <input type="text" id="confirm_password" name="confirm_password" placeholder="Xác nhận mật khẩu mới">
-        <?php if (!empty($this->errorMessage)): ?>
-            <div class="alert alert-danger" style="color: red; font-weight: bold; margin-bottom: 15px;">
-                <?= htmlspecialchars($this->errorMessage) ?>
+        <?php if (!empty($_SESSION['error'])): ?>
+            <div style="color: red; font-weight: bold; margin-bottom: 20px;">
+                <?= $_SESSION['error']; ?>
             </div>
-        <?php elseif (empty($this->errorMessage) && isset($this->successMessage)): ?>
-            <div class="alert alert-success" style="color: green; font-weight: bold; margin-bottom: 15px;">
-                <?= htmlspecialchars($this->successMessage) ?>
+            <?php unset($_SESSION['error']); ?>
+        <?php endif; ?>
+
+        <!-- Hiển thị thông báo thành công nếu có -->
+        <?php if (!empty($_SESSION['success'])): ?>
+            <div style="color: green; font-weight: bold;">
+                <?= $_SESSION['success']; ?>
             </div>
+            <?php unset($_SESSION['success']); ?>
         <?php endif; ?>
         <button type="submit">Xác nhận</button>
     </form>

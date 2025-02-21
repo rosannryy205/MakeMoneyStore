@@ -116,7 +116,7 @@ class ProductModel extends Model
 
     public function getProductSizes($productId)
     {
-        $sql = "SELECT size FROM product_sizes WHERE product_id = :product_id";
+        $sql = "SELECT * FROM product_sizes WHERE product_id = :product_id";
         return $this->db->getAll($sql, [':product_id' => $productId]);
     }
 

@@ -11,14 +11,19 @@
                     <i class="fas fa-lock"></i>
                     <input name="password" type="password" placeholder="Mật khẩu">
                 </div>
-                <?php if (!empty($this->errorMessage)): ?>
-                    <div class="alert alert-danger" style="color: red; font-weight: bold; margin-bottom: 15px;">
-                        <?= htmlspecialchars($this->errorMessage) ?>
+                <?php if (!empty($_SESSION['error'])): ?>
+                    <div style="color: red; font-weight: bold; margin-bottom: 20px;">
+                        <?= $_SESSION['error']; ?>
                     </div>
-                <?php elseif (empty($this->errorMessage) && isset($this->successMessage)): ?>
-                    <div class="alert alert-success" style="color: green; font-weight: bold; margin-bottom: 15px;">
-                        <?= htmlspecialchars($this->successMessage) ?>
+                    <?php unset($_SESSION['error']); ?>
+                <?php endif; ?>
+
+                <!-- Hiển thị thông báo thành công nếu có -->
+                <?php if (!empty($_SESSION['success'])): ?>
+                    <div style="color: green; font-weight: bold;">
+                        <?= $_SESSION['success']; ?>
                     </div>
+                    <?php unset($_SESSION['success']); ?>
                 <?php endif; ?>
 
                 <input type="submit" value="Đăng nhập" class="btnlg solid" style="background-color:#e63636; color:#FFF">

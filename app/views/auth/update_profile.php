@@ -14,14 +14,19 @@
              <label for=""><i class="fa-solid fa-key"></i> <input name="password_new" type="password" autocomplete="new-password" placeholder="Nhập lại mật mới"></label>
              <label for=""><i class="fa-solid fa-phone"></i> <input name="phone" type="text" value="<?= $_SESSION['user']['phone'] ?>"></label>
              <label for=""><i class="fa-solid fa-location-dot"></i> <input name="address" type="text" value="<?= $_SESSION['user']['address'] ?>"></label>
-             <?php if (!empty($this->errorMessage)): ?>
-                 <div class="alert alert-danger" style="color: red; font-weight: bold; margin-bottom: 15px;">
-                     <?= htmlspecialchars($this->errorMessage) ?>
+             <?php if (!empty($_SESSION['error'])): ?>
+                 <div style="color: red; font-weight: bold; margin-bottom: 20px;">
+                     <?= $_SESSION['error']; ?>
                  </div>
-             <?php elseif (empty($this->errorMessage) && isset($this->successMessage)): ?>
-                 <div class="alert alert-success" style="color: green; font-weight: bold; margin-bottom: 15px;">
-                     <?= htmlspecialchars($this->successMessage) ?>
+                 <?php unset($_SESSION['error']); ?>
+             <?php endif; ?>
+
+             <!-- Hiển thị thông báo thành công nếu có -->
+             <?php if (!empty($_SESSION['success'])): ?>
+                 <div style="color: green; font-weight: bold;">
+                     <?= $_SESSION['success']; ?>
                  </div>
+                 <?php unset($_SESSION['success']); ?>
              <?php endif; ?>
              <div class="button_profile">
                  <button style="color: white">Thay đổi</button>
