@@ -62,10 +62,21 @@ $router->add("/tang_giam_so_luong/{id}/{product_id}/{loai}", ["controller" =>"ca
 $router->add("/dashboard", ["controller" => "Admin_Cate", "action" => "index"]);
 $router->add("/admin/category", ["controller" => "Admin_Cate", "action" => "category"]);
 $router->add("/admin/product", ["controller" => "Admin_Product", "action" => "product"]);
-$router->add("/admin/insert", ["controller" => "Admin_Product", "action" => "insert"]);
+$router->add("/admin/insert_product_page", ["controller" => "Admin_Product", "action" => "insert"]);
+$router->add("/admin/them-san-pham", ["controller" => "Admin_Product", "action" => "insert_product"]);
+$router->add("/admin/xoa-san-pham/{id}", ["controller" => "Admin_Product", "action" => "delete"]);
+
+
 $router->add("/admin/image_product", ["controller" => "Admin_Product", "action" => "image_product"]);
+
+
 $router->add("/admin/user", ["controller" => "Admin_User", "action" => "user"]);
+
+
+
 $router->add("/admin/order", ["controller" => "admin", "action" => "order"]);
+
+
 $router->add("/admin/edit_cate/{id}", ["controller" => "Admin_Cate", "action" => "edit_cate"]);
 $router->add("/admin/update_cate/{id}", ["controller" => "Admin_Cate", "action" => "update_cate"]);
 $router->add("/admin/delete_cate/{id}", ["controller" => "Admin_Cate", "action" => "delete_cate"]);
