@@ -167,6 +167,27 @@ class Admin_Product_Model extends Model
         return $this->db->delete($sqlProduct, $paramsProduct);
     }
 
+    public function updateProduct(Admin_Product_Model $pro)
+    {
+        $id = $pro -> getId();
+        $name = $pro->getName();
+        $image = $pro->getImageUrl();
+        $cate = $pro->getCategoryId();
+        $price = $pro->getPrice();
+        $sale_percent = $pro->getSalepercent();
+        $sql = "UPDATE products SET name = ?, image = ?, category_id = ?, price = ?, sale_percent = ? WHERE id = ?";
+        $params = [
+            $name,
+            $image,
+            $cate,
+            $price,
+            $sale_percent,
+            $id,
+        ];
+        return $this->db->update($sql, $params);
+    }
+   
+
 
 
 }

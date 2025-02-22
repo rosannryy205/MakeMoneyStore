@@ -108,7 +108,11 @@ class AuthModel extends Model
         $image = $user->getImage() !== null ? $user->getImage() : null;
         $password = $user->getPassword();
         $address = $user->getAddress() !== null ? $user->getAddress() : null;
-        $sql = "INSERT INTO users (image, name, email, password, phone, address) VALUES (?, ?, ?, ?, ?, ?)";
+        $status = 'active'; // Thêm giá trị mặc định cho status
+
+        $sql = "INSERT INTO users (image, name, email, password, phone, address, status) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)";
+
         $params = [
             $image,
             $name,
@@ -116,9 +120,12 @@ class AuthModel extends Model
             $password,
             $phone,
             $address,
+            $status
         ];
+
         return $this->db->insert($sql, $params);
     }
+
 
 
     public function getUserEmail(string $email)
@@ -129,7 +136,7 @@ class AuthModel extends Model
 
     public function login(AuthModel $user)
     {
-        $sql = "SELECT * FROM users WHERE email = :email AND status = 0 LIMIT 1";
+        $sql = "SELECT * FROM users WHERE email = :email AND status = 'active' LIMIT 1";
         $db_user = $this->db->getOne($sql, ['email' => $user->getEmail()]);
 
 

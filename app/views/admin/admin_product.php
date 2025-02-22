@@ -20,7 +20,7 @@
                 <td><?= $p['price'] ?></td>
                 <td><?= $p['sale_percent'] ?>%</td>
                 <td><?= $p['cate_name'] ?></td>
-                <td><button class="delete-btn">Sửa</button>
+                <td><button onclick="location.href='<?= _WEB_ROOT_ ?>/admin/cap-nhat-san-pham/<?= $p['id_pro'] ?>'" class="delete-btn">Sửa</button>
                     <button onclick="location.href='<?= _WEB_ROOT_ ?>/admin/xoa-san-pham/<?= $p['id_pro'] ?>'" class="delete-btn">Xóa</button>
                 </td>
             </tr>

@@ -50,6 +50,17 @@ class Admin_Product_Controller extends Controller
         ];
         $this->render('layout/admin', $this->data);
     }
+    public function edit_product($id)
+    {
+        $cate = $this->admin_product_model->getAllCate();
+        $pro = $this -> admin_product_model -> getProductById($id);
+        $this->data['content'] = 'admin/edit_product';
+        $this->data['sub_content'] = [
+            'pro' => $pro,
+            'cate' => $cate,
+        ];
+        $this->render('layout/admin', $this->data);
+    }
     
     public function insert_product(){
         if($_SERVER['REQUEST_METHOD']==='POST'){
@@ -113,6 +124,54 @@ class Admin_Product_Controller extends Controller
         }
 
         $this->data['content'] = 'admin/product';
+        $this->data['sub_content'] = [];
+        $this->render('layout/admin', $this->data);
+    }
+
+    public function update_product($id)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $name = $_POST['name'];
+            $price = $_POST['price'];
+            $sale_percent = $_POST['sale_percent'];
+            $cate = $_POST['cate'];
+
+            $oldProduct = $this->admin_product_model->getProductById($id);
+            $image = $oldProduct['image']; // Mặc định giữ ảnh cũ
+
+            if (empty($name) || empty($price) || empty($sale_percent) || empty($cate)) {
+                $_SESSION['error'] = "Vui lòng điền đầy đủ thông tin";
+            }
+
+            if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                $uploadDir = "public/image_product/";
+                $fileName = time() . '-' . basename($_FILES['image']['name']);
+                $targetFile = $uploadDir . $fileName;
+
+                if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
+                    $image = $fileName; // Chỉ cập nhật ảnh nếu tải lên thành công
+                } else {
+                    $_SESSION['error'] = "Thêm ảnh thất bại";
+                }
+            }
+
+            if (empty($_SESSION['error'])) {
+                $this->admin_product_model->setId($id);
+                $this->admin_product_model->setName($name);
+                $this->admin_product_model->setImageUrl($image);
+                $this->admin_product_model->setPrice($price);
+                $this->admin_product_model->setSalepercent($sale_percent);
+                $this->admin_product_model->setCategoryId($cate);
+                $this->admin_product_model->updateProduct($this->admin_product_model);
+
+                header("Location: " . _WEB_ROOT_ . "/admin/product");
+                exit;
+            } else {
+                $_SESSION['error'] = "Cập nhật sản phẩm thất bại";
+            }
+        }
+
+        $this->data['content'] = 'admin/edit_product';
         $this->data['sub_content'] = [];
         $this->render('layout/admin', $this->data);
     }

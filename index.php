@@ -65,12 +65,16 @@ $router->add("/admin/product", ["controller" => "Admin_Product", "action" => "pr
 $router->add("/admin/insert_product_page", ["controller" => "Admin_Product", "action" => "insert"]);
 $router->add("/admin/them-san-pham", ["controller" => "Admin_Product", "action" => "insert_product"]);
 $router->add("/admin/xoa-san-pham/{id}", ["controller" => "Admin_Product", "action" => "delete"]);
+$router->add("/admin/cap-nhat-san-pham/{id}", ["controller" => "Admin_Product", "action" => "edit_product"]);
+$router->add("/admin/update_product/{id}", ["controller" => "Admin_Product", "action" => "update_product"]);
 
 
 $router->add("/admin/image_product", ["controller" => "Admin_Product", "action" => "image_product"]);
 
 
 $router->add("/admin/user", ["controller" => "Admin_User", "action" => "user"]);
+$router->add("/admin/edit_user/{id}", ["controller" => "Admin_User", "action" => "edit_user"]);
+$router->add("/admin/update_user/{id}", ["controller" => "Admin_User", "action" => "update_user"]);
 
 
 
