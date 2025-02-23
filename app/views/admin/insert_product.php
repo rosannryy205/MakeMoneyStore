@@ -6,9 +6,15 @@
         <input style="width: 400px; height: 50px; border-radius: 30px; padding-left: 20px" type="text" name="name" value="">
         <br>
         <br>
-        <label for="">Ảnh sản phẩm:</label><br>
+        <label for="">Ảnh chính sản phẩm:</label><br>
         <div style="width: 400px; height: 50px; border-radius: 30px; padding-left: 20px; border: 1px solid black">
-            <input style="padding-top: 13px; width: 400px;" type="file" name="image">
+            <input style="padding-top: 13px; width: 400px;" type="file" name="image_show">
+        </div>
+        <br>
+        <br>
+        <label for="">Ảnh chi tiết sản phẩm:</label><br>
+        <div style="width: 400px; height: 50px; border-radius: 30px; padding-left: 20px; border: 1px solid black">
+            <input style="padding-top: 13px; width: 400px;" type="file" name="image[]" multiple>
         </div>
         <br>
         <br>
@@ -46,7 +52,7 @@
             </div>
             <?php unset($_SESSION['success']); ?>
         <?php endif; ?>
-        <button>Thêm danh mục</button>
+        <button>Thêm sản phẩm </button>
     </form>
     <button onclick="location.href='<?= _WEB_ROOT_ ?>/admin/category'">Hủy</button>
 </main>

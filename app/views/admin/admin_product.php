@@ -3,7 +3,8 @@
     <table>
         <tr>
             <th style="font-size: 11.5px;">ID</th>
-            <th style="font-size: 11.5px;">Sản phẩm</th>
+            <th style="font-size: 11.5px;">Ảnh sản phẩm</th>
+            <th style="font-size: 11.5px;">Ảnh chi tiết</th>
             <th style="font-size: 11.5px;">Tên sản phẩm</th>
             <th style="font-size: 11.5px;">Giá</th>
             <th style="font-size: 11.5px;">Giảm</th>
@@ -12,19 +13,40 @@
         </tr>
 
 
-        <?php foreach ($pros as $p) { ?>
+        <?php foreach ($pros as $pro) { ?>
             <tr>
-                <td><?= $p['id_pro'] ?></td>
-                <td><img src="<?= _WEB_ROOT_ ?>/public/image_product/<?= $p['image'] ?>" alt="" height="50px" width="50px"></td>
-                <td><?= $p['product_name'] ?></td>
-                <td><?= $p['price'] ?></td>
-                <td><?= $p['sale_percent'] ?>%</td>
-                <td><?= $p['cate_name'] ?></td>
-                <td><button onclick="location.href='<?= _WEB_ROOT_ ?>/admin/cap-nhat-san-pham/<?= $p['id_pro'] ?>'" class="delete-btn">Sửa</button>
-                    <button onclick="location.href='<?= _WEB_ROOT_ ?>/admin/xoa-san-pham/<?= $p['id_pro'] ?>'" class="delete-btn">Xóa</button>
+                <td><?= $pro['id_pro'] ?></td>
+                <td>
+                    <?php if (!empty($pro['main_image'])): ?>
+                        <img src="<?= _WEB_ROOT_ ?>/public/image_product/<?= $pro['main_image'] ?>" alt="Ảnh chính" height="50px" width="50px">
+                    <?php else: ?>
+                        <span>Không có ảnh chính</span>
+                    <?php endif; ?>
+                </td>
+                <td>
+                    <?php
+                    if (!empty($pro['detail_images'])) {
+                        $detail_images = explode(',', $pro['detail_images']);
+                        $detail_images = array_slice($detail_images, 0, 6);
+                        foreach ($detail_images as $img_url) {
+                            echo '<img src="' . _WEB_ROOT_ . '/public/image_product/' . $img_url . '" alt="Ảnh chi tiết" height="50px" width="50px"> ';
+                        }
+                    } else {
+                        echo 'Không có ảnh chi tiết';
+                    }
+                    ?>
+                </td>
+                <td><?= $pro['product_name'] ?></td>
+                <td><?= $pro['price'] ?></td>
+                <td><?= $pro['sale_percent'] ?>%</td>
+                <td><?= $pro['cate_name'] ?></td>
+                <td>
+                    <button onclick="location.href='<?= _WEB_ROOT_ ?>/admin/cap-nhat-san-pham/<?= $pro['id_pro'] ?>'">Sửa</button>
+                    <button onclick="location.href='<?= _WEB_ROOT_ ?>/admin/xoa-san-pham/<?= $pro['id_pro'] ?>'">Xóa</button>
                 </td>
             </tr>
         <?php } ?>
+
     </table>
     <?php if (!empty($_SESSION['error'])): ?>
         <div style="color: red; font-weight: bold; margin-top:20px; margin-bottom: 20px">

@@ -23,7 +23,7 @@ class Database
   {
     $param = array_slice(func_get_args(), 1);
     $stmt = $this->query($sql, $param);
-    return $stmt->fetchColumn(); // Lấy giá trị của cột đầu tiên
+    return $stmt->fetchColumn();
   }
 
   public function getPdo()
@@ -41,20 +41,18 @@ class Database
     }
     return $stmt;
   }
-  
-  // getAll($sql, $MaTK, $MaDM,....)
-  public function getAll($sql, $param=[])
+
+  public function getAll($sql, $param = [])
   {
     $stmt = $this->query($sql, $param);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  public function getOne($sql, $param=[] )
+  public function getOne($sql, $param = [])
   {
     $stmt = $this->query($sql, $param);
     return $stmt->fetch(PDO::FETCH_ASSOC);
   }
-
 
   public function insert($sql, $param = [])
   {
@@ -69,9 +67,25 @@ class Database
   }
 
   public function delete($sql, $param = [])
-  {   
+  {
     $stmt = $this->query($sql, $param);
     return $stmt->rowCount();
+  }
+
+  // Các phương thức hỗ trợ transaction
+  public function beginTransaction()
+  {
+    return $this->pdo->beginTransaction();
+  }
+
+  public function commit()
+  {
+    return $this->pdo->commit();
+  }
+
+  public function rollBack()
+  {
+    return $this->pdo->rollBack();
   }
 
   public function __destruct()
@@ -79,3 +93,4 @@ class Database
     unset($this->pdo);
   }
 }
+

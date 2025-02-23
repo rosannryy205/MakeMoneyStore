@@ -51,23 +51,22 @@ nav ul li a {
     padding: 8px 0; /* Tăng khoảng cách giữa nội dung và viền */
 }
 
-
-
-.sidebarad {
-    width: 200px;
-    flex-basis: 250px;
-    background-color: rgb(255, 178, 178);
-    color: white;
-    padding: 20px;
-    flex-shrink: 0;
-    border-radius: 30px;
+.menu_admin {
+    display: flex;
+    background-color: rgb(195, 21, 21);
+    height: 100px;
+    width: 100%;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
 }
-
-.sidebarad a {
-    color: white;
+.menu_admin a {
     text-decoration: none;
-    font-weight: bold;
+    color: #fff; /* Nếu muốn thay đổi màu chữ */
 }
+
+
+
 
 .main-contentad {
     padding: 20px;

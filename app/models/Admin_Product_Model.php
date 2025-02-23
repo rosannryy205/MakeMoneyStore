@@ -6,6 +6,7 @@ class Admin_Product_Model extends Model
     private $id;
     private $name;
     private $image_url;
+    private $image_show;
     private $category_id;
     private $price;
     private $sale_percent;
@@ -50,6 +51,16 @@ class Admin_Product_Model extends Model
     public function setImageUrl($image_url)
     {
         $this->image_url = $image_url;
+    }
+
+    public function getImageShow()
+    {
+        return $this->image_show;
+    }
+
+    public function setImageShow($image_show)
+    {
+        $this->image_show = $image_show;
     }
 
     // Getter and Setter for $category_id
@@ -105,9 +116,28 @@ class Admin_Product_Model extends Model
 
     public function getAllPro()
     {
-        $sql = "SELECT cate.name as cate_name, p.name as product_name, p.id as id_pro,  p.*, cate.* FROM products p INNER JOIN categories cate ON p.category_id = cate.id  ";
+                $sql = "SELECT 
+                            cate.name AS cate_name,
+                            p.name AS product_name,
+                            p.id AS id_pro,
+                            p.price,
+                            p.sale_percent,
+                            MAX(pi.image_show) AS main_image,
+                            GROUP_CONCAT(pi.image_url SEPARATOR ',') AS detail_images
+                        FROM products p
+                        INNER JOIN categories cate ON p.category_id = cate.id
+                        LEFT JOIN product_images pi ON p.id = pi.product_id
+                        GROUP BY p.id
+                        ORDER BY p.id ASC;
+                    ";
         return $this->db->getAll($sql);
     }
+    public function getProductImageById($id)
+    {
+        $sql = "SELECT * FROM product_images WHERE product_id = :id";
+        return $this->db->getAll($sql, [':id' => $id]);
+    }
+
 
     public function getProductById($id)
     {
@@ -118,6 +148,14 @@ class Admin_Product_Model extends Model
         return $this->db->getOne($sql,$params);
     }
 
+    public function getProductImagesById($id)
+    {
+        $sql = "SELECT * FROM product_images WHERE product_id = ?";
+        $params = [$id];
+        return $this->db->getAll($sql, $params);
+    }
+
+
     public function getAllCate()
     {
         $sql = "SELECT * FROM categories  ";
@@ -125,43 +163,90 @@ class Admin_Product_Model extends Model
     }
 
 
-    public function getAllImagePro(){
-        $sql = "SELECT pi.id AS id_img, pi.*, p.* FROM product_images pi INNER JOIN products p ON pi.product_id = p.id";
-        return $this->db->getAll($sql);
+
+    public function insertProduct(Admin_Product_Model $pro)
+    {
+        
+        $this->db->beginTransaction();
+
+      
+        $sql_product = "INSERT INTO products (name, category_id, price, sale_percent, description, sales) VALUES (?,?,?,?,?,0)";
+        $params_product = [
+            $pro->getName(),
+            $pro->getCategoryId(),
+            $pro->getPrice(),
+            $pro->getSalepercent(),
+            $pro->getDescription()
+        ];
+        $lastInsertId = $this->db->insert($sql_product, $params_product);
+        if (!$lastInsertId) {
+            $this->db->rollBack();
+            return false;
+        }
+
+     
+        if ($pro->getImageShow()) {
+            $sql_main = "INSERT INTO product_images (product_id, image_url, image_show ) VALUES (?,?,?)";
+            $params_main = [
+                $lastInsertId,
+                $pro->getImageShow(),  // link ảnh chính
+                $pro->getImageShow(),  // link ảnh chính
+            ];
+            $res_main = $this->db->insert($sql_main, $params_main);
+            if (!$res_main) {
+                $this->db->rollBack();
+                return false;
+            }
+        }
+
+     
+        if ($pro->getImageUrl()) {
+            // Nếu getImageUrl() trả về mảng
+            if (is_array($pro->getImageUrl())) {
+                foreach ($pro->getImageUrl() as $img) {
+                    $sql_detail = "INSERT INTO product_images (product_id, image_url) VALUES (?,?)";
+                    $params_detail = [
+                        $lastInsertId,
+                        $img  
+                    ];
+                    $res_detail = $this->db->insert($sql_detail, $params_detail);
+                    if (!$res_detail) {
+                        $this->db->rollBack();
+                        return false;
+                    }
+                }
+            } else {
+                $sql_detail = "INSERT INTO product_images (product_id, image_url) VALUES (?,?)";
+                $params_detail = [
+                    $lastInsertId,
+                    $pro->getImageUrl()
+                ];
+                $res_detail = $this->db->insert($sql_detail, $params_detail);
+                if (!$res_detail) {
+                    $this->db->rollBack();
+                    return false;
+                }
+            }
+        }
+
+        $this->db->commit();
+        return $lastInsertId;
     }
 
-    public function insertProduct(Admin_Product_Model $pro){
-        $name = $pro -> getName();
-        $image = $pro -> getImageUrl();
-        $cate = $pro -> getCategoryId();
-        $price = $pro -> getPrice();
-        $sale_percent = $pro -> getSalepercent();
-        $description = $pro -> getDescription();
-        $sql = "INSERT INTO products (name, image, category_id, price, sale_percent, description, sales) VALUES (?,?,?,?,?,?,0)";
-        $params = [
-            $name,
-            $image,
-            $cate,
-            $price,
-            $sale_percent,
-            $description,
-        ];
-        return $this -> db -> insert($sql,$params);
-    }
+
 
     public function deleteProduct($id)
     {
-        // Xóa các bản ghi liên quan trong bảng product_images
+     
         $sqlImages = "DELETE FROM product_images WHERE product_id = ?";
         $paramsImages = [$id];
         $this->db->delete($sqlImages, $paramsImages);
 
-        // Xóa các bản ghi liên quan trong bảng product_sizes
+       
         $sqlSizes = "DELETE FROM product_sizes WHERE product_id = ?";
         $paramsSizes = [$id];
         $this->db->delete($sqlSizes, $paramsSizes);
 
-        // Xóa sản phẩm trong bảng products
         $sqlProduct = "DELETE FROM products WHERE id = ?";
         $paramsProduct = [$id];
         return $this->db->delete($sqlProduct, $paramsProduct);
@@ -169,23 +254,82 @@ class Admin_Product_Model extends Model
 
     public function updateProduct(Admin_Product_Model $pro)
     {
-        $id = $pro -> getId();
+      
+        $this->db->beginTransaction();
+
+        $id = $pro->getId();
         $name = $pro->getName();
-        $image = $pro->getImageUrl();
         $cate = $pro->getCategoryId();
         $price = $pro->getPrice();
         $sale_percent = $pro->getSalepercent();
-        $sql = "UPDATE products SET name = ?, image = ?, category_id = ?, price = ?, sale_percent = ? WHERE id = ?";
+
+        
+        $sql = "UPDATE products SET name = ?, category_id = ?, price = ?, sale_percent = ? WHERE id = ?";
         $params = [
             $name,
-            $image,
             $cate,
             $price,
             $sale_percent,
             $id,
         ];
-        return $this->db->update($sql, $params);
+        $rowCount = $this->db->update($sql, $params);
+        if ($rowCount === false) {
+            $this->db->rollBack();
+            return false;
+        }
+
+        
+        $sql_delete = "DELETE FROM product_images WHERE product_id = ?";
+        $this->db->delete($sql_delete, [$id]);
+
+       
+        if ($pro->getImageShow()) {
+            $sql_main = "INSERT INTO product_images (product_id, image_url, image_show) VALUES (?,?,?)";
+            $params_main = [
+                $id,
+                $pro->getImageShow(),
+                $pro->getImageShow()
+            ];
+            $res_main = $this->db->insert($sql_main, $params_main);
+            if (!$res_main) {
+                $this->db->rollBack();
+                return false;
+            }
+        }
+
+      
+        if ($pro->getImageUrl()) {
+            if (is_array($pro->getImageUrl())) {
+                foreach ($pro->getImageUrl() as $img) {
+                    $sql_detail = "INSERT INTO product_images (product_id, image_url) VALUES (?,?)";
+                    $params_detail = [
+                        $id,
+                        $img
+                    ];
+                    $res_detail = $this->db->insert($sql_detail, $params_detail);
+                    if (!$res_detail) {
+                        $this->db->rollBack();
+                        return false;
+                    }
+                }
+            } else {
+                $sql_detail = "INSERT INTO product_images (product_id, image_url) VALUES (?,?)";
+                $params_detail = [
+                    $id,
+                    $pro->getImageUrl()
+                ];
+                $res_detail = $this->db->insert($sql_detail, $params_detail);
+                if (!$res_detail) {
+                    $this->db->rollBack();
+                    return false;
+                }
+            }
+        }
+
+        $this->db->commit();
+        return true;
     }
+
    
 
 

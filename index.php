@@ -69,7 +69,7 @@ $router->add("/admin/cap-nhat-san-pham/{id}", ["controller" => "Admin_Product", 
 $router->add("/admin/update_product/{id}", ["controller" => "Admin_Product", "action" => "update_product"]);
 
 
-$router->add("/admin/image_product", ["controller" => "Admin_Product", "action" => "image_product"]);
+
 
 
 $router->add("/admin/user", ["controller" => "Admin_User", "action" => "user"]);
@@ -78,7 +78,7 @@ $router->add("/admin/update_user/{id}", ["controller" => "Admin_User", "action" 
 
 
 
-$router->add("/admin/order", ["controller" => "admin", "action" => "order"]);
+$router->add("/admin/order", ["controller" => "Admin_Order", "action" => "index"]);
 
 
 $router->add("/admin/edit_cate/{id}", ["controller" => "Admin_Cate", "action" => "edit_cate"]);

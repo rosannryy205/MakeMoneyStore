@@ -25,12 +25,6 @@
                         <a style="display: flex; width: 30px; height: 30px; background-color: #ddd; color: black; justify-content: center; align-items: center; text-decoration: none; border: 1px solid #ccc;"
                             href="<?= _WEB_ROOT_ ?>/tang_giam_so_luong/<?= $c['id'] ?>/<?= $c['product_id'] ?>/more">+</a>
                     </div>
-
-                    <!-- <div class="plus">
-                        <input style="width: 25px; height: 25px;" type="button" value="-" onclick="decrement()">
-                        <input style="width: 50px; height: 25px;" type="text" id="number" value="<?= $c['quantity'] ?>" min="1">
-                        <input style="width: 25px; height: 25px;" type="button" value="+" onclick="increment()">
-                    </div> -->
                 </div>
                 <div class="delete">
                     <a style="color: black" href="<?= _WEB_ROOT_ ?>/cart/delete/<?= $c['id'] ?>/<?= $c['product_id'] ?>"><i class="fa-solid fa-trash fa-xl"></i></a>

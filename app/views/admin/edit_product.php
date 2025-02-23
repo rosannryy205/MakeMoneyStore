@@ -6,11 +6,32 @@
         <input style="width: 400px; height: 50px; border-radius: 30px; padding-left: 20px" type="text" name="name" value="<?= $pro['name'] ?>">
         <br>
         <br>
-        <label for="">Ảnh sản phẩm:</label><br>
-        <img src="<?= _WEB_ROOT_ ?>/public/image_product/<?= $pro['image'] ?>" alt="" height="200px" width="200px">
+
+        <?php if (!empty($img)): ?>
+            <label for="">Ảnh sản phẩm:</label><br>
+            <img src="<?= _WEB_ROOT_ ?>/public/image_product/<?= $img[0]['image_show'] ?>" alt="" height="200px" width="200px">
+        <?php endif; ?>
         <div style="width: 400px; height: 50px; border-radius: 30px; padding-left: 20px; border: 1px solid black">
-            <input style="padding-top: 13px; width: 400px;" type="file" name="image">
+            <input style="padding-top: 13px; width: 400px;" type="file" name="image_show">
         </div>
+        <br>
+        <br>
+        <label for="">Ảnh chi tiết sản phẩm:</label> <br>
+        <?php
+        if (!empty($img)):
+
+            foreach ($img as $img):
+        ?>
+
+                <img src="<?= _WEB_ROOT_ ?>/public/image_product/<?= $img['image_url'] ?>" alt="" height="50px" width="50px">
+        <?php
+            endforeach;
+        endif;
+        ?>
+        <div style="width: 400px; height: 50px; border-radius: 30px; padding-left: 20px; border: 1px solid black">
+            <input style="padding-top: 13px; width: 400px;" type="file" name="image[]" multiple>
+        </div>
+
         <br>
         <br>
         <label for="">Giá sản phẩm:</label><br>
@@ -46,5 +67,5 @@
         <?php endif; ?>
         <button>Thêm danh mục</button>
     </form>
-    <button onclick="location.href='<?= _WEB_ROOT_ ?>/admin/category'">Hủy</button>
+    <button onclick="location.href='<?= _WEB_ROOT_ ?>/admin/product'">Hủy</button>
 </main>
