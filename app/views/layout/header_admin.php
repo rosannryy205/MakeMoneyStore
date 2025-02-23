@@ -4,7 +4,17 @@
              <img src="<?= _WEB_ROOT_ ?>/public/image/logo.png" alt="" width="180px" height="200px">
          </div>
          <h1 style="color:rgb(195, 21, 21)">Admin Dashboard</h1>
-
+         <div class="search">
+             <form action="<?= _WEB_ROOT_ ?>/tim-kiem-admin" method="POST">
+                 <input
+                     style="width:250px; height:40px; border-radius:20px 0px 0px 20px; padding-left: 15px;"
+                     type="text" name="keyword" placeholder="Tìm kiếm">
+                 <button
+                     style="width: 60px; height: 40px; border-radius: 0px 20px 20px 0px; margin: 0px;padding: 0px;">
+                     <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+                 </button>
+             </form>
+         </div>
          <div class="icon_top_header">
              <?php if (isset($_SESSION['user'])): ?>
                  <?php if (!empty($_SESSION['user']['image'])): ?>
@@ -27,8 +37,6 @@
                      <i class="fa-regular fa-user fa-xl" style="font-size: 30px;"></i>
                  </a>
              <?php endif; ?>
-             <a style="color: black" href=""><i class="fa-regular fa-heart fa-xl"></i></a>
-             <a style="color: black" href="<?= _WEB_ROOT_ ?>/gio-hang"><i class="fa-solid fa-bag-shopping fa-xl"></i></a>
          </div>
      </div>
      <div class="menu_admin" style="display: flex; background-color: rgb(223, 211, 211); height: 100px; width: 100%; justify-content: center; gap: 20px; align-items: center;">

@@ -79,4 +79,22 @@ class Admin_Cate_Model extends Model
         return $this->db->update($sql, $params);
     }
 
+    function getOrderStatistics($db)
+    {
+        $sql = "SELECT 
+                (SELECT COUNT(*) FROM products) AS total_products,
+                (SELECT COUNT(*) FROM categories) AS total_categories,
+                (SELECT COUNT(*) FROM users WHERE role != 1) AS total_users,
+                SUM(CASE WHEN status = 'gio-hang' THEN 1 ELSE 0 END) AS gio_hang,
+                SUM(CASE WHEN status = 'cho-xac-nhan' THEN 1 ELSE 0 END) AS cho_xac_nhan,
+                SUM(CASE WHEN status = 'dang-chuan-bi' THEN 1 ELSE 0 END) AS dang_chuan_bi,
+                SUM(CASE WHEN status = 'dang-giao-hang' THEN 1 ELSE 0 END) AS dang_giao_hang,
+                SUM(CASE WHEN status = 'hoan-tat-don-hang' THEN 1 ELSE 0 END) AS hoan_tat_don_hang,
+                SUM(CASE WHEN status = 'huy-don' THEN 1 ELSE 0 END) AS huy_don
+            FROM carts";
+
+        return $db->getOne($sql);
+    }
+
+
 }

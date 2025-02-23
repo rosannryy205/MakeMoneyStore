@@ -1,5 +1,6 @@
 <?php
 require "./core/Controller.php";
+require_once "./core/Database.php";
 
 class Admin_Cate_Controller extends Controller
 {
@@ -14,11 +15,13 @@ class Admin_Cate_Controller extends Controller
 
     public function index()
     {
+        $db = new Database(); 
+        $stats = $this -> admin_cate_model -> getOrderStatistics($db);
         $this->data['page_title'] = 'Trang chủ Admin';
         $this->data['content'] = 'admin/index';
-
-        // Thêm nhiều sub_content
-        $this->data['sub_content'] = [];
+        $this->data['sub_content'] = [
+            'stats' => $stats
+        ];
 
         $this->render('layout/admin', $this->data);
     }

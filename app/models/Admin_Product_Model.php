@@ -330,6 +330,28 @@ class Admin_Product_Model extends Model
         return true;
     }
 
+    public function searchProduct($keyword)
+    {
+        $keyword = '%' . $keyword . '%';
+        $sql = "SELECT 
+                cate.name AS cate_name,
+                p.name AS product_name,
+                p.id AS id_pro,
+                p.price,
+                p.sale_percent,
+                MAX(pi.image_show) AS main_image,
+                GROUP_CONCAT(pi.image_url SEPARATOR ',') AS detail_images
+            FROM products p
+            INNER JOIN categories cate ON p.category_id = cate.id
+            LEFT JOIN product_images pi ON p.id = pi.product_id
+            WHERE p.name LIKE :keyword OR p.description LIKE :keyword
+            GROUP BY p.id
+            ORDER BY p.id ASC";
+
+        return $this->db->getAll($sql, [':keyword' => $keyword]);
+    }
+
+
    
 
 

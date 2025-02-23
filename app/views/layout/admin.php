@@ -7,12 +7,13 @@
     <title>Admin - Converse Store</title>
     <link rel="stylesheet" href="<?= _WEB_ROOT_ ?>/public/css/admin.css">
     <link rel="stylesheet" href="<?= _WEB_ROOT_ ?>/public/css/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 </head>
 
 <body>
     <?php
     $this->render('layout/header_admin');
-    
+
     // Render content
     if (isset($sub_content) && is_array($sub_content)) {
         // Nếu sub_content tồn tại và là mảng, render

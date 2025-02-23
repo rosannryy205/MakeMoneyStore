@@ -68,6 +68,7 @@ $router->add("/admin/them-san-pham", ["controller" => "Admin_Product", "action" 
 $router->add("/admin/xoa-san-pham/{id}", ["controller" => "Admin_Product", "action" => "delete"]);
 $router->add("/admin/cap-nhat-san-pham/{id}", ["controller" => "Admin_Product", "action" => "edit_product"]);
 $router->add("/admin/update_product/{id}", ["controller" => "Admin_Product", "action" => "update_product"]);
+$router->add("/tim-kiem-admin", ["controller" => "Admin_Product", "action" => "search"]);
 
 
 

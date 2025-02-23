@@ -146,8 +146,16 @@ class ProductModel extends Model
     public function searchProduct($keyword)
     {
         $keyword = '%' . $keyword . '%';
-        $sql = "SELECT * FROM products WHERE name LIKE :keyword OR description LIKE :keyword";
+        $sql = "SELECT 
+                p.*, 
+                pi.image_show as image_show
+            FROM products p
+            LEFT JOIN product_images pi ON p.id = pi.product_id
+            WHERE p.name LIKE :keyword OR p.description LIKE :keyword
+            GROUP BY p.id";
+
         return $this->db->getAll($sql, [':keyword' => $keyword]);
     }
+
 
 }

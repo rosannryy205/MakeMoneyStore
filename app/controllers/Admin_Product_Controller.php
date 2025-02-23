@@ -137,7 +137,7 @@ class Admin_Product_Controller extends Controller
 
     public function delete($id)
     {
-        // Lấy thông tin sản phẩm trước khi xóa
+
         $product = $this->admin_product_model->getProductById($id);
         $productName = $product['name']; 
 
@@ -237,5 +237,30 @@ class Admin_Product_Controller extends Controller
     }
 
 
+    public function search($keyword = '')
+    {
+        
+        $keyword = isset($_POST['keyword']) ? $_POST['keyword'] : $keyword;
+
+        // Nếu không có từ khóa tìm kiếm
+        if (empty($keyword)) {
+            $_SESSION['error']= 'Vui lòng nhập từ khóa tìm kiếm.';
+            header("Location: " . _WEB_ROOT_ . "/san-pham");
+            exit();
+        }
+
+        $products = $this->admin_product_model->searchProduct($keyword);
+
+        if (empty($products)) {
+            $_SESSION['error'] = 'Không tìm thấy sản phẩm phù hợp với từ khóa của bạn.';
+        }
+
+    
+        $this->data['error'] = $this->errorMessage ?? '';
+        $this->data['sub_content']['products'] = $products;
+        $this->data['page_title'] = 'Kết quả tìm kiếm';
+        $this->data['content'] = 'admin/search_admin_product'; // View chứa kết quả tìm kiếm
+        $this->render('layout/admin', $this->data);
+    }
     
 }
