@@ -40,26 +40,32 @@ class Admin_User_Controller extends Controller
         $this->render('layout/admin', $this->data);
     }
 
-    public function update_user($id){
-        if($_SERVER['REQUEST_METHOD']==='POST'){
+    public function update_user($id)
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $status = $_POST['status'] ?? '';
 
             if (!in_array($status, ['active', 'block'])) {
                 $_SESSION['error'] = "Trạng thái không hợp lệ! Chỉ chấp nhận active hoặc block";
-            } else {
-                $this->admin_user_model->setID($id);
-                $this->admin_user_model->setStatus($status);
-                $this->admin_user_model->updateUser($this->admin_user_model);
-                header('loaction:' . _WEB_ROOT_ . '/admin/user');
+                header('Location: ' . _WEB_ROOT_ . '/admin/edit_user/' . $id);
                 exit;
             }
-        } else {
-            $_SESSION['error'] = "Cập nhật thất bại !";
+
+            $this->admin_user_model->setID($id);
+            $this->admin_user_model->setStatus($status);
+            if ($this->admin_user_model->updateUser($this->admin_user_model)) {
+                $_SESSION['success'] = "Cập nhật thành công!";
+            } else {
+                $_SESSION['error'] = "Cập nhật thất bại!";
+            }
+            header('Location: ' . _WEB_ROOT_ . '/admin/user');
+            exit;
         }
-        $this->data['content'] = 'admin/admin_user';
+
+        $this->data['content'] = 'admin/edit_user';
         $this->data['sub_content'] = [];
         $this->render('layout/admin', $this->data);
-       
     }
+
 
 }

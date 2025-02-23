@@ -71,7 +71,7 @@
                     extract($pro) ?>
                     <div class="item item2 ">
                         <a href="<?= _WEB_ROOT_ ?>/chi-tiet-san-pham/<?= $id ?>">
-                            <img src="<?= _WEB_ROOT_ ?>/public/image_product/<?= $image_url ?>" alt="" width="285px" height="273px">
+                            <img src="<?= _WEB_ROOT_ ?>/public/image_product/<?= $image_show ?>" alt="" width="285px" height="273px">
                             <span class="product_name">
                                 <h5><?= $name ?></h5>
                             </span>

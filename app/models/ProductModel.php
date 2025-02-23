@@ -86,19 +86,42 @@ class ProductModel extends Model
 
     public function getSales()
     {
-        $sql = "SELECT * FROM products ORDER BY sales DESC LIMIT 5";
+        $sql = "SELECT 
+                p.*, 
+                pi.image_show
+                FROM products AS p
+                LEFT JOIN product_images AS pi 
+                ON p.id = pi.product_id 
+                AND (pi.image_show IS NOT NULL AND pi.image_show <> '')
+                ORDER BY p.sales DESC
+                LIMIT 5;";
         return $this->db->getAll($sql);
     }
 
+    
     public function getProducts()
     {
-        $sql = "SELECT * FROM products ";
+        $sql = "SELECT 
+                p.*, 
+                pi.image_show
+                FROM products AS p
+                LEFT JOIN product_images AS pi 
+                ON p.id = pi.product_id 
+                AND (pi.image_show IS NOT NULL AND pi.image_show <> '');";
         return $this->db->getAll($sql);
     }
+
 
 
     public function getRelatedProduct(){
-        $sql = "SELECT * FROM products LIMIT  8";
+        $sql = "SELECT 
+                p.*, 
+                pi.image_show
+                FROM products AS p
+                LEFT JOIN product_images AS pi 
+                ON p.id = pi.product_id 
+                AND (pi.image_show IS NOT NULL AND pi.image_show <> '')
+                LIMIT 8;";
         return $this -> db -> getAll($sql);
     }
 
