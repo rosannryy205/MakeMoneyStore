@@ -57,6 +57,7 @@ $router->add("/gio-hang", ["controller" => "cart", "action" => "index"]);
 $router->add("/them-san-pham/{id}", ["controller" => "cart", "action" => "add_to_cart"]);
 $router->add("/cart/delete/{id}/{product_id}", ["controller" => "cart", "action" => "delete"]);
 $router->add("/tang_giam_so_luong/{id}/{product_id}/{loai}", ["controller" =>"cart", "action"=>"cartItem"]);
+$router->add("/order/addOrder", ["controller" =>"order", "action"=> "addOrder"]);
 
 //Trang Admin
 $router->add("/dashboard", ["controller" => "Admin_Cate", "action" => "index"]);

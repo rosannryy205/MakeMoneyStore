@@ -6,8 +6,8 @@ class CartModel extends Model
     private $id;
     private $user_id;
     private $product_id;
-    private $size_id;
     private $quantity;
+    private $total_amount;
 
     protected $db;
 
@@ -49,16 +49,6 @@ class CartModel extends Model
         $this->product_id = $product_id;
     }
 
-    // Getter & Setter cho size_id
-    public function getSizeId()
-    {
-        return $this->size_id;
-    }
-
-    public function setSizeId($size_id)
-    {
-        $this->size_id = $size_id;
-    }
 
     // Getter & Setter cho quantity
     public function getQuantity()
@@ -101,11 +91,25 @@ class CartModel extends Model
     }
 
     public function getProductInCart($user_id){
-        $sql = "SELECT c.id, p.id AS product_id, p.name, p.image, p.price, cd.quantity 
-        FROM carts c 
-        INNER JOIN cart_detail cd ON c.id = cd.id 
-        INNER JOIN products p ON p.id = cd.product_id 
-        WHERE c.user_id = :user_id AND c.status = 'gio-hang'";
+            $sql = "SELECT 
+                        c.id,
+                        p.id AS product_id,
+                        p.name,
+                        p.price,
+                        cd.quantity,
+                        (
+                        SELECT pi.image_show 
+                        FROM product_images pi 
+                        WHERE pi.product_id = p.id 
+                        ORDER BY pi.id ASC
+                        LIMIT 1
+                        ) AS image_show
+                    FROM carts c 
+                    INNER JOIN cart_detail cd ON c.id = cd.id
+                    INNER JOIN products p ON p.id = cd.product_id
+                    WHERE c.user_id = :user_id 
+                    AND c.status = 'gio-hang';
+                    ";
 
         return $this -> db -> getAll($sql, [':user_id' => $user_id]);
 
@@ -143,6 +147,29 @@ class CartModel extends Model
             return $this->db->delete($sql_delete, [':id' => $id, ':product_id' => $product_id]);
         }
     }
+
+    public function addOrder($id, $soluong, $tongtien)
+    {
+        $dateTime = date("Y-m-d H:i:s"); 
+        $sql = "UPDATE carts SET quantity = ?, total_amount = ?, create_at = ?, status = 'cho-xac-nhan' WHERE id = ?";
+        $params = [
+            $soluong,
+            $tongtien,
+            $dateTime,
+            $id
+        ];
+        $this->db->update($sql, $params);
+
+        $sql2 ="UPDATE cart_detail cd SET price = (
+                SELECT price FROM products p WHERE cd.product_id = p.id
+        ) WHERE id = ?";
+        $params2 = [
+            $id
+        ];
+        return $this->db->update($sql2, $params2);
+    }
+
+
 
 
 }
