@@ -80,6 +80,10 @@ $router->add("/admin/update_user/{id}", ["controller" => "Admin_User", "action" 
 
 
 $router->add("/admin/order", ["controller" => "Admin_Order", "action" => "index"]);
+$router->add("/admin/update_order", ["controller" => "Admin_Order", "action" => "update_status"]);
+$router->add("/admin/delete_order", ["controller" => "Admin_Order", "action" => "delete_status"]);
+$router->add("/admin/edit_order/{id}", ["controller" => "Admin_Order", "action" => "edit"]);
+$router->add("/admin/delete_order/{id}", ["controller" => "Admin_Order", "action" => "delete"]);
 
 
 $router->add("/admin/edit_cate/{id}", ["controller" => "Admin_Cate", "action" => "edit_cate"]);
