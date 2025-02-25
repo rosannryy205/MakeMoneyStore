@@ -1,5 +1,6 @@
 <main class="main-contentad">
     <h2>Quản lý sản phẩm</h2>
+    <button style="margin-left: 1230px" onclick="location.href='<?= _WEB_ROOT_ ?>/admin/insert_product_page'">Thêm sản phẩm</button>
     <table>
         <tr>
             <th style="font-size: 11.5px;">ID</th>
@@ -16,7 +17,7 @@
         <?php foreach ($pros as $pro) { ?>
             <tr>
                 <td><?= $pro['id_pro'] ?></td>
-                <td>
+                <td style="display: flex; justify-content: center; gap: 10px">
                     <?php if (!empty($pro['main_image'])): ?>
                         <img src="<?= _WEB_ROOT_ ?>/public/image_product/<?= $pro['main_image'] ?>" alt="Ảnh chính" height="50px" width="50px">
                     <?php else: ?>
@@ -36,13 +37,19 @@
                     }
                     ?>
                 </td>
-                <td><?= $pro['product_name'] ?></td>
-                <td><?= $pro['price'] ?></td>
+                <td style="width: 250px;">
+                    <div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 250px;">
+                        <?= $pro['product_name'] ?>
+                    </div>
+                </td>
+                <td><?= number_format($pro['price'], 0, ',', '.') . ' VNĐ' ?></td>
                 <td><?= $pro['sale_percent'] ?>%</td>
                 <td><?= $pro['cate_name'] ?></td>
                 <td>
-                    <button onclick="location.href='<?= _WEB_ROOT_ ?>/admin/cap-nhat-san-pham/<?= $pro['id_pro'] ?>'">Sửa</button>
-                    <button onclick="location.href='<?= _WEB_ROOT_ ?>/admin/xoa-san-pham/<?= $pro['id_pro'] ?>'">Xóa</button>
+                    <div style="margin-left: 30px;">
+                        <button style="background-color: #F5CC47;" onclick="location.href='<?= _WEB_ROOT_ ?>/admin/cap-nhat-san-pham/<?= $pro['id_pro'] ?>'"><i class="fa-solid fa-pen-to-square" style="color: #ffffff;"></i></button>
+                        <button onclick="location.href='<?= _WEB_ROOT_ ?>/admin/xoa-san-pham/<?= $pro['id_pro'] ?>'"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></button>
+                    </div>
                 </td>
             </tr>
         <?php } ?>
@@ -62,5 +69,4 @@
         </div>
         <?php unset($_SESSION['success']); ?>
     <?php endif; ?>
-    <button onclick="location.href='<?= _WEB_ROOT_ ?>/admin/insert_product_page'">Thêm sản phẩm</button>
 </main>

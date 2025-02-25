@@ -69,15 +69,14 @@ class CartModel extends Model
     public function addCart($user_id){
         $sql = "INSERT INTO carts(`user_id`) VALUE (:user_id)";
         return $this -> db -> insert($sql, [':user_id' => $user_id]);
-
     }
 
-    public function addProduct($id, $product_id)
+    public function addProduct($id, $product_id, $size_id)
     {
         $kq = $this -> hasCart($id, $product_id);
         if($kq){
-            $sql = "UPDATE cart_detail SET quantity = quantity + 1 WHERE id = :id AND product_id = :product_id";
-            return $this -> db -> update($sql, [':id' => $id, ':product_id' => $product_id]);
+            $sql = "UPDATE cart_detail SET quantity = quantity + 1 WHERE id = :id AND product_id = :product_id AND size_id = :size_id";
+            return $this -> db -> update($sql, [':id' => $id, ':product_id' => $product_id, ':size_id' => $size_id]);
         } else {
             $sql = "INSERT INTO cart_detail(`id`, `product_id`) VALUES (:id, :product_id)";
             return $this->db->insert($sql, [':id' => $id, ':product_id' => $product_id]);

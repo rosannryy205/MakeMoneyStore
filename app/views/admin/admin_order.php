@@ -19,9 +19,9 @@
                 <td><?= $o['quantity'] ?></td>
                 <td><?= $o['total_amount'] ?></td>
                 <td><?= $o['trangthai'] ?></td>
-                <td>
-                    <button onclick="location.href='<?= _WEB_ROOT_ ?>/admin/edit_order/<?= $o['id_cart'] ?>'" class="delete-btn" type="submit">Cập nhật</button>
-                    <button onclick="location.href='<?= _WEB_ROOT_ ?>/admin/delete_order/<?= $o['id_cart'] ?>'" class="delete-btn" type="button">Hủy</button>
+                <td style="display: flex; justify-content: center; gap: 10px">
+                    <button style="background-color: #F5CC47;" onclick="location.href='<?= _WEB_ROOT_ ?>/admin/edit_order/<?= $o['id_cart'] ?>'" class="delete-btn" type="submit"><i class="fa-solid fa-pen-to-square" style="color: #ffffff;"></button>
+                    <button onclick="location.href='<?= _WEB_ROOT_ ?>/admin/delete_order/<?= $o['id_cart'] ?>'" class="delete-btn" type="button"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></button>
                 </td>
             </tr>
         <?php } ?>

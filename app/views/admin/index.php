@@ -1,5 +1,4 @@
 <main class="main-contentad">
-    <h2>Thống kê đơn hàng</h2>
     <h2>Thống kê hệ thống</h2>
     <table border="1" cellspacing="0" cellpadding="10">
         <tr>

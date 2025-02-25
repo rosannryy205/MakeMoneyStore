@@ -1,5 +1,5 @@
  <header>
-     <div class="top_header" style=" background:rgb(223, 211, 211);">
+     <div class="top_header" style=" background:#E1E1E1;">
          <div class="left_logo">
              <img src="<?= _WEB_ROOT_ ?>/public/image/logo.png" alt="" width="180px" height="200px">
          </div>
@@ -39,7 +39,7 @@
              <?php endif; ?>
          </div>
      </div>
-     <div class="menu_admin" style="display: flex; background-color: rgb(223, 211, 211); height: 100px; width: 100%; justify-content: center; gap: 20px; align-items: center;">
+     <div class="menu_admin" style="display: flex; background-color: #E1E1E1; height: 50px; width: 100%; justify-content: center; gap: 20px; align-items: center;">
          <h3 style="margin: 0;"><a href="<?= _WEB_ROOT_ ?>/dashboard" style="text-decoration: none; color: rgb(195, 21, 21);">Dashboard</a></h3>
          <h3 style="margin: 0;"><a href="<?= _WEB_ROOT_ ?>/admin/category" style="text-decoration: none; color: rgb(195, 21, 21);">Quản lý danh mục</a></h3>
          <h3 style="margin: 0;"><a href="<?= _WEB_ROOT_ ?>/admin/product" style="text-decoration: none; color: rgb(195, 21, 21);">Quản lý sản phẩm</a></h3>

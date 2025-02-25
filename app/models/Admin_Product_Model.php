@@ -254,7 +254,6 @@ class Admin_Product_Model extends Model
 
     public function updateProduct(Admin_Product_Model $pro)
     {
-      
         $this->db->beginTransaction();
 
         $id = $pro->getId();
@@ -263,65 +262,43 @@ class Admin_Product_Model extends Model
         $price = $pro->getPrice();
         $sale_percent = $pro->getSalepercent();
 
-        
+        // Cập nhật thông tin sản phẩm
         $sql = "UPDATE products SET name = ?, category_id = ?, price = ?, sale_percent = ? WHERE id = ?";
-        $params = [
-            $name,
-            $cate,
-            $price,
-            $sale_percent,
-            $id,
-        ];
+        $params = [$name, $cate, $price, $sale_percent, $id];
         $rowCount = $this->db->update($sql, $params);
+
         if ($rowCount === false) {
             $this->db->rollBack();
             return false;
         }
 
-        
-        $sql_delete = "DELETE FROM product_images WHERE product_id = ?";
-        $this->db->delete($sql_delete, [$id]);
+        // Kiểm tra nếu có ảnh mới thì mới xóa ảnh cũ
+        if ($pro->getImageShow() || $pro->getImageUrl()) {
+            $sql_delete = "DELETE FROM product_images WHERE product_id = ?";
+            $this->db->delete($sql_delete, [$id]);
 
-       
-        if ($pro->getImageShow()) {
-            $sql_main = "INSERT INTO product_images (product_id, image_url, image_show) VALUES (?,?,?)";
-            $params_main = [
-                $id,
-                $pro->getImageShow(),
-                $pro->getImageShow()
-            ];
-            $res_main = $this->db->insert($sql_main, $params_main);
-            if (!$res_main) {
-                $this->db->rollBack();
-                return false;
+            // Cập nhật ảnh chính
+            if ($pro->getImageShow()) {
+                $sql_main = "INSERT INTO product_images (product_id, image_url, image_show) VALUES (?,?,?)";
+                $params_main = [$id, $pro->getImageShow(), $pro->getImageShow()];
+                $res_main = $this->db->insert($sql_main, $params_main);
+                if (!$res_main) {
+                    $this->db->rollBack();
+                    return false;
+                }
             }
-        }
 
-      
-        if ($pro->getImageUrl()) {
-            if (is_array($pro->getImageUrl())) {
-                foreach ($pro->getImageUrl() as $img) {
+            // Cập nhật ảnh phụ
+            if ($pro->getImageUrl()) {
+                $imageUrls = is_array($pro->getImageUrl()) ? $pro->getImageUrl() : [$pro->getImageUrl()];
+                foreach ($imageUrls as $img) {
                     $sql_detail = "INSERT INTO product_images (product_id, image_url) VALUES (?,?)";
-                    $params_detail = [
-                        $id,
-                        $img
-                    ];
+                    $params_detail = [$id, $img];
                     $res_detail = $this->db->insert($sql_detail, $params_detail);
                     if (!$res_detail) {
                         $this->db->rollBack();
                         return false;
                     }
-                }
-            } else {
-                $sql_detail = "INSERT INTO product_images (product_id, image_url) VALUES (?,?)";
-                $params_detail = [
-                    $id,
-                    $pro->getImageUrl()
-                ];
-                $res_detail = $this->db->insert($sql_detail, $params_detail);
-                if (!$res_detail) {
-                    $this->db->rollBack();
-                    return false;
                 }
             }
         }
@@ -329,6 +306,7 @@ class Admin_Product_Model extends Model
         $this->db->commit();
         return true;
     }
+
 
     public function searchProduct($keyword)
     {

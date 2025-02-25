@@ -22,7 +22,10 @@
                 <td><?= $u['phone'] ?></td>
                 <td><?= $u['address'] ?></td>
                 <td><?= $u['status'] ?></td>
-                <td><button onclick="location.href='<?= _WEB_ROOT_ ?>/admin/edit_user/<?= $u['id'] ?>'" class="delete-btn">Sửa</button><button class="delete-btn">Xóa</button></td>
+                <td>
+                    <button style="background-color: #F5CC47;" onclick="location.href='<?= _WEB_ROOT_ ?>/admin/edit_user/<?= $u['id'] ?>'" class="delete-btn">Sửa</button>
+                    <button class="delete-btn">Xóa</button>
+                </td>
             </tr>
         <?php } ?>
     </table>

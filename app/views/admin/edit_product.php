@@ -65,7 +65,7 @@
             </div>
             <?php unset($_SESSION['success']); ?>
         <?php endif; ?>
-        <button>Thêm danh mục</button>
+        <button>Thêm sản phẩm</button>
     </form>
     <button onclick="location.href='<?= _WEB_ROOT_ ?>/admin/product'">Hủy</button>
 </main>

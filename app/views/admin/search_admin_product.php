@@ -36,7 +36,11 @@
                     }
                     ?>
                 </td>
-                <td><?= $pro['product_name'] ?></td>
+                <td style="width: 250px;">
+                    <div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 250px;">
+                        <?= $pro['product_name'] ?>
+                    </div>
+                </td>
                 <td><?= $pro['price'] ?></td>
                 <td><?= $pro['sale_percent'] ?>%</td>
                 <td><?= $pro['cate_name'] ?></td>

@@ -43,12 +43,15 @@ class Cart_Controller extends Controller
     }
 
 
-    public function add_to_cart($product_id)
+    public function add_to_cart()
     {
+
+        $product_id = isset($_POST['product_id']) ? $_POST['product_id'] : null;
+        $size_id    = isset($_POST['size_id'])    ? $_POST['size_id']    : null;
         // echo "them san pham " . $product_id;
         if (!isset($_SESSION['user'])) {
             $this->errorMessage = "Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng!";
-            header("Location: " . _WEB_ROOT_ . "/dang-nhap"); // Chuyển hướng về trang đăng nhập
+            header("Location: " . _WEB_ROOT_ . "/dang-nhap"); 
             exit;
         }
 
@@ -61,7 +64,7 @@ class Cart_Controller extends Controller
                 $cart = $this->cart_model->getCartByUser($user_id);
             }
 
-            $order->addProduct($cart['id'], $product_id);
+            $order->addProduct($cart['id'], $product_id, $size_id);
         } else {
             if(!isset($_SESSION['carts'])){
                 $_SESSION['carts'] = [];
