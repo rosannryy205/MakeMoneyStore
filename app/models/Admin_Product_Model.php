@@ -12,6 +12,7 @@ class Admin_Product_Model extends Model
     private $sale_percent;
     private $description;
     private $sales;
+    private $size_id;
 
     protected $db;
 
@@ -61,6 +62,15 @@ class Admin_Product_Model extends Model
     public function setImageShow($image_show)
     {
         $this->image_show = $image_show;
+    }
+    public function getSizeIds()
+    {
+        return $this->size_id;
+    }
+
+    public function setSizeIds($size_id)
+    {
+        $this->size_id = $size_id;
     }
 
     // Getter and Setter for $category_id
@@ -166,11 +176,11 @@ class Admin_Product_Model extends Model
 
     public function insertProduct(Admin_Product_Model $pro)
     {
-        
         $this->db->beginTransaction();
 
-      
-        $sql_product = "INSERT INTO products (name, category_id, price, sale_percent, description, sales) VALUES (?,?,?,?,?,0)";
+        
+        $sql_product = "INSERT INTO products (name, category_id, price, sale_percent, description, sales) 
+                    VALUES (?, ?, ?, ?, ?, 0)";
         $params_product = [
             $pro->getName(),
             $pro->getCategoryId(),
@@ -184,14 +194,11 @@ class Admin_Product_Model extends Model
             return false;
         }
 
-     
+  
         if ($pro->getImageShow()) {
-            $sql_main = "INSERT INTO product_images (product_id, image_url, image_show ) VALUES (?,?,?)";
-            $params_main = [
-                $lastInsertId,
-                $pro->getImageShow(),  // link ảnh chính
-                $pro->getImageShow(),  // link ảnh chính
-            ];
+            $sql_main = "INSERT INTO product_images (product_id, image_url, image_show) 
+                     VALUES (?, ?, ?)";
+            $params_main = [$lastInsertId, $pro->getImageShow(), $pro->getImageShow()];
             $res_main = $this->db->insert($sql_main, $params_main);
             if (!$res_main) {
                 $this->db->rollBack();
@@ -199,16 +206,12 @@ class Admin_Product_Model extends Model
             }
         }
 
-     
+    
         if ($pro->getImageUrl()) {
-            // Nếu getImageUrl() trả về mảng
             if (is_array($pro->getImageUrl())) {
                 foreach ($pro->getImageUrl() as $img) {
-                    $sql_detail = "INSERT INTO product_images (product_id, image_url) VALUES (?,?)";
-                    $params_detail = [
-                        $lastInsertId,
-                        $img  
-                    ];
+                    $sql_detail = "INSERT INTO product_images (product_id, image_url) VALUES (?, ?)";
+                    $params_detail = [$lastInsertId, $img];
                     $res_detail = $this->db->insert($sql_detail, $params_detail);
                     if (!$res_detail) {
                         $this->db->rollBack();
@@ -216,13 +219,23 @@ class Admin_Product_Model extends Model
                     }
                 }
             } else {
-                $sql_detail = "INSERT INTO product_images (product_id, image_url) VALUES (?,?)";
-                $params_detail = [
-                    $lastInsertId,
-                    $pro->getImageUrl()
-                ];
+                $sql_detail = "INSERT INTO product_images (product_id, image_url) VALUES (?, ?)";
+                $params_detail = [$lastInsertId, $pro->getImageUrl()];
                 $res_detail = $this->db->insert($sql_detail, $params_detail);
                 if (!$res_detail) {
+                    $this->db->rollBack();
+                    return false;
+                }
+            }
+        }
+
+       
+        if ($pro->getSizeIds()) {
+            foreach ($pro->getSizeIds() as $sizeId) {
+                $sql_size = "INSERT INTO product_sizes (product_id, size_id, stock) VALUES (?, ?, ?)";
+                $params_size = [$lastInsertId, $sizeId, rand(20, 30)]; // Stock ngẫu nhiên từ 20 - 30
+                $res_size = $this->db->insert($sql_size, $params_size);
+                if (!$res_size) {
                     $this->db->rollBack();
                     return false;
                 }
@@ -232,6 +245,7 @@ class Admin_Product_Model extends Model
         $this->db->commit();
         return $lastInsertId;
     }
+
 
 
 
@@ -329,6 +343,13 @@ class Admin_Product_Model extends Model
         return $this->db->getAll($sql, [':keyword' => $keyword]);
     }
 
+
+
+    public function getSizes()
+    {
+        $sql = "SELECT * FROM sizes";
+        return $this->db->getAll($sql);
+    }
 
    
 

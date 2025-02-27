@@ -5,7 +5,7 @@
                 <span> <?= $detail['id'] ?> </span>
             </div>
             <!-- STAR MAIN PRODUCT DETAILS -->
-            <form action="" method="post">
+            <form action="<?= _WEB_ROOT_ ?>/them-san-pham" method="post">
                 <div class="main_product_details">
                     <div class="img_product_details">
                         <?php foreach ($productImages as $image): ?>
@@ -18,24 +18,36 @@
                             <div class="discount_details" style="font-size: 15px; color: red;">
                                 <?= $detail['sale_percent'] ?> %
                             </div>
-                            <span style="font-weight: bold;"><?= $detail['price'] ?> đ</span>
+                            <span style="font-weight: bold;">
+                                <?= number_format($detail['price'], 0, ',', '.') ?> VND
+                            </span>
                         </div>
 
                         <div class="trasau">
                             <span>Trả sau <span style="color: aqua;">499.500đ</span> x2 với</span><img src="https://assets.fundiin.vn/merchant/logo_transparent.png" alt="">
                         </div>
-
+                        <div style="display: flex; align-items: center;">
+                            <button type="button" onclick="decreaseValue()" style="width: 30px; height: 30px;">-</button>
+                            <input id="productQuantity" style="height: 30px; padding-left: 10px; width: 50px; text-align: center;" type="number" name="quantity" value="1" min="1">
+                            <button type="button" onclick="increaseValue()" style="width: 30px; height: 30px;">+</button>
+                        </div>
                         <div class="size_products_details">
+                            <input type="hidden" name="product_id" value="<?= $detail['id'] ?>">
                             <select style="height:50px; border-radius: 30px; padding-left:10px; width:250px" name="size_id" id="size_id">
                                 <option value="">Chọn size cho sản phẩm</option>
                                 <?php foreach ($productSizes as $ps): ?>
-                                    <option value="<?= $ps['id'] ?>"><?= $ps['size'] ?></option>
+                                    <option value="<?= $ps['product_size_id'] ?>"><?= $ps['size_name'] ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
-
+                        <?php if (!empty($_SESSION['error'])): ?>
+                            <div style="color: red; font-weight: bold;">
+                                <?= $_SESSION['error']; ?>
+                            </div>
+                            <?php unset($_SESSION['error']); ?>
+                        <?php endif; ?>
                         <div class="function_button">
-                            <button onclick="location.href='<?= _WEB_ROOT_ ?>/them-san-pham/<?= trim($detail['id']) ?>'" class="addcart">
+                            <button class="addcart">
                                 Thêm vào giỏ hàng
                             </button>
                             <button class="addfav">Thêm vào danh sách yêu thích</button>
@@ -46,13 +58,13 @@
             <div class="info_product_details">
                 <h4>Thông tin sản phẩm</h4>
                 <span>
-                    <i class="fa-solid fa-tag fa-xl"></i> Mới, phân phối chính hãng bởi Converse Việt Nam
+                    <i class="fa-solid fa-tag fa-xl"></i> Mới, phân phối chính hãng bởi Make$
                 </span>
                 <span>
                     <i class="fa-solid fa-box fa-xl"></i> Hộp giày, giấy gói, tag treo, túi xách
                 </span>
                 <span>
-                    <i class="fa-solid fa-medal fa-xl"></i> Bảo hành 30 ngày chính hãng, lỗi từ NSX
+                    <i class="fa-solid fa-medal fa-xl"></i> Bảo hành 30 ngày chính hãng
                 </span>
                 <span>
                     <i class="fa-solid fa-shield fa-xl"></i> Giá sản phẩm đã bao gồm 10% VAT
@@ -88,38 +100,16 @@
                 <div><input type="text" placeholder="Nhập địa chỉ email của bạn"><button>Đăng Ký</button></div>
                 <div><i style="padding-right: 10px;" class="fa-solid fa-phone fa-xl"></i>Hỗ trợ mua hàng: <a style="color: red;" href="">0964006257</a></div>
             </div>
-
-
-
             <script>
-                function increment() {
-                    var value = parseInt(document.getElementById('number').value, 10);
-                    value = isNaN(value) ? 0 : value;
-                    value++;
-                    document.getElementById('number').value = value;
+                function increaseValue() {
+                    let input = document.getElementById("productQuantity");
+                    input.value = parseInt(input.value) + 1;
                 }
 
-                function decrement() {
-                    var value = parseInt(document.getElementById('number').value, 10);
-                    value = isNaN(value) ? 0 : value;
-
-                    // Kiểm tra nếu giá trị là 1, không giảm thêm
-                    if (value > 1) {
-                        value--;
-                        document.getElementById('number').value = value;
+                function decreaseValue() {
+                    let input = document.getElementById("productQuantity");
+                    if (input.value > parseInt(input.min)) {
+                        input.value = parseInt(input.value) - 1;
                     }
-                }
-
-
-                function selectSize(element) {
-                    // Bỏ lớp 'selected' khỏi tất cả các size
-                    const sizes = document.querySelectorAll('.size_details');
-                    sizes.forEach(size => {
-                        size.classList.remove('selected');
-                    });
-
-                    // Thêm lớp 'selected' cho size được click
-                    const sizeDiv = element.querySelector('.size_details');
-                    sizeDiv.classList.add('selected');
                 }
             </script>

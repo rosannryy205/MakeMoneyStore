@@ -4,7 +4,7 @@
      <div class="content_footer">
          <div class="intro info">
              <p>Giới thiệu</p>
-             <span>KCONS.VN Official Site là đối tác chính thức của Converse Vietnam/ New Balance Vietnam.</span>
+             <span>MAKE$ Official Site là đối tác chính thức của Converse Vietnam/ New Balance Vietnam.</span>
          </div>
          <div class="link info">
              <p>Liên kết</p>
@@ -18,7 +18,7 @@
              </ul>
          </div>
          <div class="location info">
-             <p>CÔNG TY TNHH MTV TMDV VT TỪ ĐỨC - MST: 1801377715</p>
+             <p>CÔNG TY TNHH MTV MAKE MONEY STORE</p>
              <table cellspacing="10px">
                  <tr>
                      <td><i class="fa-solid fa-location-dot fa-lg"></i></td>

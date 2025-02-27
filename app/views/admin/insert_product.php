@@ -18,6 +18,17 @@
         </div>
         <br>
         <br>
+        <label for="">Size sản phẩm:</label><br>
+        <div style="width: 400px; border: 1px solid black; border-radius: 10px; padding: 10px;">
+            <?php foreach ($sizes as $s): ?>
+                <label style="display: flex; align-items: center; gap: 5px;">
+                    <input type="checkbox" name="size[]" value="<?= $s['id'] ?>" style="width: 12px; height: 12px;">
+                    <?= $s['size_name'] ?>
+                </label>
+            <?php endforeach; ?>
+        </div>
+        <br>
+        <br>
         <label for="">Giá sản phẩm:</label><br>
         <input style="width: 400px; height: 50px; border-radius: 30px; padding-left: 20px" type="text" name="price" value="">
         <br>

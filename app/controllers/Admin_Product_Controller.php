@@ -39,9 +39,11 @@ class Admin_Product_Controller extends Controller
     public function insert()
     {
         $cate = $this -> admin_product_model -> getAllCate();
+        $sizes = $this -> admin_product_model -> getSizes();
         $this->data['content'] = 'admin/insert_product';
         $this->data['sub_content'] = [
             'cate' => $cate,
+            'sizes' => $sizes,
         ];
         $this->render('layout/admin', $this->data);
     }
@@ -62,19 +64,20 @@ class Admin_Product_Controller extends Controller
     public function insert_product()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Lấy dữ liệu cơ bản từ form
             $name         = trim($_POST['name']);
             $price        = trim($_POST['price']);
             $sale_percent = trim($_POST['sale_percent']);
             $description  = trim($_POST['description']);
             $cate         = trim($_POST['cate']);
+            $sizes        = isset($_POST['size']) ? $_POST['size'] : []; 
 
-            if (empty($name) || empty($price) || empty($sale_percent) || empty($description) || empty($cate)) {
+            if (empty($name) || empty($price) || empty($sale_percent) || empty($description) || empty($cate)|| empty($sizes)) {
                 $_SESSION['error'] = "Vui lòng điền đầy đủ thông tin";
                 header("Location:" . _WEB_ROOT_ . "/admin/insert_product_page");
                 exit;
             }
 
+            // Xử lý upload ảnh chính
             $image_show = '';
             if (isset($_FILES['image_show']) && $_FILES['image_show']['error'] === UPLOAD_ERR_OK) {
                 $uploadDir  = "public/image_product/";
@@ -93,7 +96,7 @@ class Admin_Product_Controller extends Controller
                 exit;
             }
 
-
+            // Xử lý upload ảnh chi tiết
             $detailImages = [];
             if (isset($_FILES['image']) && !empty($_FILES['image']['name'][0])) {
                 $uploadDir = "public/image_product/";
@@ -108,14 +111,17 @@ class Admin_Product_Controller extends Controller
                 }
             }
 
+            // Gán dữ liệu vào model
             $this->admin_product_model->setName($name);
-            $this->admin_product_model->setImageShow($image_show);  
-            $this->admin_product_model->setImageUrl($detailImages);   
+            $this->admin_product_model->setImageShow($image_show);
+            $this->admin_product_model->setImageUrl($detailImages);
             $this->admin_product_model->setPrice($price);
             $this->admin_product_model->setSalepercent($sale_percent);
             $this->admin_product_model->setDescription($description);
             $this->admin_product_model->setCategoryId($cate);
+            $this->admin_product_model->setSizeIds($sizes); 
 
+            // Thực hiện thêm sản phẩm
             $lastInsertId = $this->admin_product_model->insertProduct($this->admin_product_model);
             if ($lastInsertId) {
                 $_SESSION['success'] = "Thêm sản phẩm thành công";
@@ -129,10 +135,12 @@ class Admin_Product_Controller extends Controller
         } else {
             $_SESSION['error'] = "Phương thức không hợp lệ";
         }
+
         $this->data['content'] = 'admin/insert_product';
         $this->data['sub_content'] = [];
         $this->render('layout/admin', $this->data);
     }
+
 
 
     public function delete($id)

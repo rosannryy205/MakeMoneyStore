@@ -45,55 +45,52 @@ class Cart_Controller extends Controller
 
     public function add_to_cart()
     {
+        if($_SERVER['REQUEST_METHOD']=='POST'){
+            // echo "<pre>";
+            // print_r($_POST);
+            // echo "</pre>";
+            // exit;
+            $product_id = isset($_POST['product_id']) ? $_POST['product_id'] : null;
+            $quantity = isset($_POST['quantity']) ? $_POST['quantity'] : null;
+            $size_id    = isset($_POST['size_id'])    ? $_POST['size_id']    : null;
 
-        $product_id = isset($_POST['product_id']) ? $_POST['product_id'] : null;
-        $size_id    = isset($_POST['size_id'])    ? $_POST['size_id']    : null;
-        // echo "them san pham " . $product_id;
-        if (!isset($_SESSION['user'])) {
-            $this->errorMessage = "Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng!";
-            header("Location: " . _WEB_ROOT_ . "/dang-nhap"); 
-            exit;
-        }
+            if (!isset($_SESSION['user'])) {
+                $_SESSION['error'] = "Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng!";
+                header("Location: " . _WEB_ROOT_ . "/dang-nhap");
+                exit;
+            }
 
-        if (isset($_SESSION['user'])) {
-            $user_id = $_SESSION['user']['id'];
-            $order = $this->cart_model = $this->model('CartModel');
-            $cart = $this->cart_model->getCartByUser($user_id);
-            if (!$cart) {
-                $order->addCart($user_id);
+            if (!isset($size_id)) {
+                $_SESSION['error'] = "Bạn cần chọn size cho sản phẩm !";
+                header("Location: " . _WEB_ROOT_ . "/chi-tiet-san-pham/" . $product_id);
+                exit;
+            }
+
+            if (isset($_SESSION['user'])) {
+                $user_id = $_SESSION['user']['id'];
+                $order = $this->cart_model = $this->model('CartModel');
                 $cart = $this->cart_model->getCartByUser($user_id);
-            }
-
-            $order->addProduct($cart['id'], $product_id, $size_id);
-        } else {
-            if(!isset($_SESSION['carts'])){
-                $_SESSION['carts'] = [];
-            }
-
-                $search = false;    
-                $i = 0;
-                foreach ($_SESSION['carts'] as  $sp) {
-                    if ($sp['product_id'] == $product_id) {
-                        $_SESSION['carts'][$i]['quantity']++;
-                        $search = true;
-                        break;
-                    }
-                    $i++;
+                if (!$cart) {
+                    $order->addCart($user_id);
+                    $cart = $this->cart_model->getCartByUser($user_id);
+                
                 }
-                if (!$search) {
-                    $_SESSION['carts'][] = [
-                        "product_id" => $product_id,
-                        "quantity" => 1
-                    ];
+                $result = $order->addProduct($cart['id'], $product_id, $size_id, $quantity);
+
+                if ($result === false) {
+                    $_SESSION['error'] = "Bạn cần chọn size cho sản phẩm !!";
+                    header("Location: " . _WEB_ROOT_ . "/chi-tiet-san-pham/" . $product_id);
+                    exit;
                 }
             }
-        header("location: "._WEB_ROOT_. "/gio-hang");
+            header("location: " . _WEB_ROOT_ . "/gio-hang");
+        } 
     }
 
 
-    public function delete($id,$product_id)
+    public function delete($id,$product_id,$size_id)
     {
-        if ($this->cart_model->deleteCartItem($id, $product_id)) {
+        if ($this->cart_model->deleteCartItem($id, $product_id, $size_id)) {
             $_SESSION['success'] = "Xóa sản phẩm khỏi giỏ hàng thành công!";
         } else {
             $_SESSION['error'] = "Không thể xóa sản phẩm!";

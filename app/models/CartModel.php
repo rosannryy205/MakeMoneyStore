@@ -71,43 +71,70 @@ class CartModel extends Model
         return $this -> db -> insert($sql, [':user_id' => $user_id]);
     }
 
-    public function addProduct($id, $product_id, $size_id)
+    public function addProduct($id, $product_id, $product_sizes_id, $quantity)
     {
-        $kq = $this -> hasCart($id, $product_id);
+        if (empty($product_sizes_id)) {
+            return false;
+        }
+
+        $kq = $this -> hasCart($id, $product_id, $product_sizes_id);
         if($kq){
-            $sql = "UPDATE cart_detail SET quantity = quantity + 1 WHERE id = :id AND product_id = :product_id AND size_id = :size_id";
-            return $this -> db -> update($sql, [':id' => $id, ':product_id' => $product_id, ':size_id' => $size_id]);
+            $sql = "UPDATE cart_detail SET quantity = quantity + ?  WHERE id = ? AND product_id = ? AND product_sizes_id = ?";
+            $params = [
+                $quantity,
+                $id,
+                $product_id,
+                $product_sizes_id
+            ];
+            return $this -> db -> update($sql, $params);
         } else {
-            $sql = "INSERT INTO cart_detail(`id`, `product_id`) VALUES (:id, :product_id)";
-            return $this->db->insert($sql, [':id' => $id, ':product_id' => $product_id]);
+            $sql = "INSERT INTO cart_detail(`id`, `product_id` , `product_sizes_id` , `quantity`) VALUES (?,?,?,?)";
+            $params = [
+                $id,
+                $product_id,
+                $product_sizes_id,
+                $quantity,
+            ];
+            return $this->db->insert($sql,$params);
         }
 
     }
 
-    public function hasCart($id, $product_id){
-        $sql = "SELECT * FROM cart_detail WHERE id = :id AND product_id = :product_id";
-        return $this->db->getOne($sql, [':id' => $id, ':product_id' => $product_id]);
+    public function hasCart($id, $product_id, $product_sizes_id){
+        $sql = "SELECT * FROM cart_detail WHERE id = ? AND product_id = ? AND product_sizes_id = ? ";
+        $params = [
+            $id,
+            $product_id,
+            $product_sizes_id
+        ];
+        return $this->db->getOne($sql, $params);
     }
 
     public function getProductInCart($user_id){
             $sql = "SELECT 
-                        c.id,
-                        p.id AS product_id,
-                        p.name,
-                        p.price,
-                        cd.quantity,
-                        (
-                        SELECT pi.image_show 
-                        FROM product_images pi 
-                        WHERE pi.product_id = p.id 
-                        ORDER BY pi.id ASC
-                        LIMIT 1
-                        ) AS image_show
-                    FROM carts c 
-                    INNER JOIN cart_detail cd ON c.id = cd.id
-                    INNER JOIN products p ON p.id = cd.product_id
-                    WHERE c.user_id = :user_id 
-                    AND c.status = 'gio-hang';
+                c.id,
+                p.id AS product_id,
+                p.name AS product_name,
+                p.price,
+                cd.quantity,
+                cd.product_sizes_id,
+                s.size_name,
+                (
+                    SELECT pi.image_show 
+                    FROM product_images pi 
+                    WHERE pi.product_id = p.id 
+                    ORDER BY pi.id ASC
+                    LIMIT 1
+                ) AS image_show
+            FROM carts c 
+            INNER JOIN cart_detail cd ON c.id = cd.id
+            INNER JOIN products p ON p.id = cd.product_id
+            INNER JOIN product_sizes ps ON ps.id = cd.product_sizes_id  
+            INNER JOIN sizes s ON s.id = ps.size_id  
+            WHERE c.user_id = :user_id
+            AND c.status = 'gio-hang' 
+            LIMIT 0, 25;
+            ;
                     ";
 
         return $this -> db -> getAll($sql, [':user_id' => $user_id]);
@@ -120,10 +147,15 @@ class CartModel extends Model
         return $this->db->getOne($sql, [':id' => $id]);
     }
 
-    public function deleteCartItem($id, $product_id)
+    public function deleteCartItem($id, $product_id, $size_id)
     {
-        $sql = "DELETE FROM cart_detail WHERE id = :id AND product_id = :product_id";
-        return $this -> db -> delete($sql, [':id' => $id, ':product_id' => $product_id]);
+        $sql = "DELETE FROM cart_detail WHERE id = ? AND product_id = ? AND size_id = ?";
+        $params = [
+            $id,
+            $product_id,
+            $size_id
+        ];
+        return $this -> db -> delete($sql, $params);
     }
     
     public function increaseItem($id, $product_id){

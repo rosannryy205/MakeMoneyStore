@@ -16,7 +16,7 @@
     <div class="bottom_header_content">
         <i class="fa-solid fa-tag fa-2xl"></i>
         <p>HÀNG CHÍNH HÃNG 100%</p>
-        <p>Đại lý ủy quyền Converse Vietnam. Cam <br> kết bồi thường gấp đôi nếu phát hiện hàng <br> fake/giả.</p>
+        <p>Đại lý ủy quyền Converse Vietnam.</p>
     </div>
     <div class="bottom_header_content">
         <i class="fa-solid fa-phone-volume fa-2xl"></i>
@@ -43,7 +43,7 @@
                     <span class="product_name">
                         <h5><?= $name ?></h5>
                     </span>
-                    <span class="price"><?= $price ?>đ</span>
+                    <span class="price"><?= number_format($price, 0, ',', '.') ?> VND</span>
                     <span class="discount">hoặc 411,000₫ x3 kỳ với <span style="color: aqua;">Fundiin</span></span>
                     <div class="discount_percent">
                         <?= $sale_percent ?>%

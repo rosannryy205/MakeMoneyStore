@@ -56,7 +56,7 @@
                     <span class="product_name">
                         <h5><?= $name ?></h5>
                     </span>
-                    <span class="price"><?= $price ?>đ</span>
+                    <span class="price"><?= number_format($price, 0, ',', '.') ?> VND</span>
                     <span class="discount">hoặc 411,000₫ x3 kỳ với <span style="color: aqua;">Fundiin</span></span>
                     <div class="discount_percent">
                         <?= $sale_percent ?>%
