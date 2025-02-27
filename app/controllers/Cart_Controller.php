@@ -20,21 +20,8 @@ class Cart_Controller extends Controller
         $cart = [];
 
         if (isset($_SESSION['user'])) {
-            // Nếu đã đăng nhập, lấy giỏ hàng từ database
             $cart = $order->getProductInCart($_SESSION['user']['id']) ?? [];
         }
-        // } elseif (!empty($_SESSION['carts'])) {
-        //     // Nếu chưa đăng nhập, lấy giỏ hàng từ session
-        //     foreach ($_SESSION['carts'] as $sessionItem) {
-        //         // Lấy thông tin chi tiết sản phẩm từ database
-        //         $product = $this->cart_model->getOneProduct($sessionItem['product_id']);
-
-        //         if ($product) {
-        //             $product['quantity'] = $sessionItem['quantity']; // Gán số lượng từ session
-        //             $cart[] = $product; // Thêm vào giỏ hàng
-        //         }
-        //     }
-        // }
 
         $this->data['page_title'] = 'Giỏ hàng';
         $this->data['content'] = 'cart/index';
@@ -46,10 +33,6 @@ class Cart_Controller extends Controller
     public function add_to_cart()
     {
         if($_SERVER['REQUEST_METHOD']=='POST'){
-            // echo "<pre>";
-            // print_r($_POST);
-            // echo "</pre>";
-            // exit;
             $product_id = isset($_POST['product_id']) ? $_POST['product_id'] : null;
             $quantity = isset($_POST['quantity']) ? $_POST['quantity'] : null;
             $size_id    = isset($_POST['size_id'])    ? $_POST['size_id']    : null;

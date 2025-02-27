@@ -23,8 +23,8 @@
                 <td><?= $u['address'] ?></td>
                 <td><?= $u['status'] ?></td>
                 <td>
-                    <button style="background-color: #F5CC47;" onclick="location.href='<?= _WEB_ROOT_ ?>/admin/edit_user/<?= $u['id'] ?>'" class="delete-btn">Sửa</button>
-                    <button class="delete-btn">Xóa</button>
+                    <button style="background-color: #F5CC47;" onclick="location.href='<?= _WEB_ROOT_ ?>/admin/edit_user/<?= $u['id'] ?>'" class="delete-btn"><i class="fa-solid fa-pen-to-square" style="color: #ffffff;"></button>
+                    <button class="delete-btn"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></button>
                 </td>
             </tr>
         <?php } ?>

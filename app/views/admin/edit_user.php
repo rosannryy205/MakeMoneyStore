@@ -15,25 +15,28 @@
         <br>
         <br>
         <label for="">Mật khẩu:</label><br>
-        <input style="width: 400px; height: 50px; border-radius: 30px; padding-left: 20px" type="text" name="sale_percent" value="<?= $user['password'] ?>" disabled> 
+        <input style="width: 400px; height: 50px; border-radius: 30px; padding-left: 20px" type="text" name="sale_percent" value="<?= $user['password'] ?>" disabled>
         <br>
         <br>
 
         <label for="">Số điện thoại:</label><br>
-        <input style="width: 400px; height: 50px; border-radius: 30px; padding-left: 20px" type="text" name="sale_percent" value="<?= $user['phone'] ?>" disabled> 
+        <input style="width: 400px; height: 50px; border-radius: 30px; padding-left: 20px" type="text" name="sale_percent" value="<?= $user['phone'] ?>" disabled>
         <br>
         <br>
 
         <label for="">Địa chỉ:</label><br>
-        <input style="width: 400px; height: 50px; border-radius: 30px; padding-left: 20px" type="text" name="sale_percent" value="<?= $user['address'] ?>" disabled> 
+        <input style="width: 400px; height: 50px; border-radius: 30px; padding-left: 20px" type="text" name="sale_percent" value="<?= $user['address'] ?>" disabled>
         <br>
         <br>
 
-        <label for="">Trạng thái:</label><br>
-        <input style="width: 400px; height: 50px; border-radius: 30px; padding-left: 20px" type="text" name="status" value="<?= $user['status'] ?>">
-        <br>
-        <br>
-        
+        <label for="status">Trạng thái:</label><br>
+        <select name="status" id="status" style="width: 400px; height: 50px; border-radius: 30px; padding-left: 20px">
+            <option value="active" <?= ($user['status'] == 'active') ? 'selected' : '' ?>>Active</option>
+            <option value="block" <?= ($user['status'] == 'block') ? 'selected' : '' ?>>Block</option>
+        </select>
+        <br><br>
+
+
         <br>
         <?php if (!empty($_SESSION['error'])): ?>
             <div style="color: red; font-weight: bold; margin-bottom: 20px; margin-top: 20px;">

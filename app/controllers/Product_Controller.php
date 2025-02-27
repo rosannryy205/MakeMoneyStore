@@ -29,12 +29,19 @@ class Product_Controller extends Controller
         $detail = $this->product_model->getOneProduct($id);
         $productImages = $this ->product_model->getProductImages($id);
         $productSizes = $this ->product_model->getProductSizes($id);
+        $fav_ids = [];
+        if (isset($_SESSION['user']['id'])) {
+            $user_id = $_SESSION['user']['id'];
+            $fav = $this->product_model->getAllFav($user_id);
+            $fav_ids = array_column($fav, 'product_id');
+        }
         $this->data['page_title'] = 'Trang chi tiết';
         $this->data['content'] = 'product/product_detail';
         $this->data['sub_content']['detail'] = $detail;
         $this->data['sub_content']['prosRelated'] = $prosRelated;
         $this->data['sub_content']['productImages'] = $productImages;
         $this->data['sub_content']['productSizes'] = $productSizes;
+        $this->data['sub_content']['fav_ids'] = $fav_ids;
         $this->render('layout/client', $this->data);
     }
 

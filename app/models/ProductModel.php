@@ -164,5 +164,54 @@ class ProductModel extends Model
         return $this->db->getAll($sql, [':keyword' => $keyword]);
     }
 
+    public function addfav($product_id, $user_id){
+        $sql = "INSERT INTO fav_products (`user_id`,`product_id`) VALUE (?,?)";
+        $params = [
+            $user_id,
+            $product_id
+        ];
+        return $this -> db -> insert($sql,$params);
+    }
+
+    public function getFavProById($user_id, $product_id)
+    {
+        $sql = "SELECT COUNT(*) as count FROM fav_products WHERE user_id = ? AND product_id = ?";
+        $params = [$user_id, $product_id];
+        $result = $this->db->getOne($sql, $params); 
+
+        return ($result && $result['count'] > 0);
+    }
+
+
+    public function getAllFav($id){
+        $sql = "SELECT 
+                fp.*,
+                p.*,
+                pi.image_show
+                FROM fav_products AS fp
+                INNER JOIN products AS p
+                ON fp.product_id = p.id
+                LEFT JOIN product_images AS pi 
+                ON fp.product_id = pi.product_id 
+                AND (pi.image_show IS NOT NULL AND pi.image_show <> '') 
+                WHERE user_id = ?";
+        $params = [
+            $id
+        ];
+        return $this->db->getAll($sql,$params);
+    }
+
+    public function deleteFav($user_id,$product_id)
+    {
+        $sql = "DELETE FROM fav_products WHERE user_id = ?  AND  product_id = ?";
+        $params = [
+            $user_id,
+            $product_id,
+        ];
+
+        return $this->db->delete($sql, $params);
+    }
+
+
 
 }

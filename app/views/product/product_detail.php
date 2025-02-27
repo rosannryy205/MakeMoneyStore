@@ -3,8 +3,19 @@
                 <a href="">Best Seller</a>
                 <span> <?= $detail['name'] ?> </span>
                 <span> <?= $detail['id'] ?> </span>
+
+                <?php
+                $is_fav = isset($fav_ids) && in_array($detail['id'], $fav_ids);
+                ?>
+
+                <?php if ($is_fav): ?>
+                    <a href="<?= _WEB_ROOT_ ?>/xoa-yeu-thich/<?= $detail['id'] ?>"> <i class="fa-solid fa-heart fa-xl" style="color: red;"></i> </a>
+                <?php else: ?>
+                    <a href="<?= _WEB_ROOT_ ?>/them-yeu-thich/<?= $detail['id'] ?>"> <i class="fa-regular fa-heart fa-xl"></i></a>
+                <?php endif; ?>
             </div>
             <!-- STAR MAIN PRODUCT DETAILS -->
+
             <form action="<?= _WEB_ROOT_ ?>/them-san-pham" method="post">
                 <div class="main_product_details">
                     <div class="img_product_details">
@@ -28,7 +39,7 @@
                         </div>
                         <div style="display: flex; align-items: center;">
                             <button type="button" onclick="decreaseValue()" style="width: 30px; height: 30px;">-</button>
-                            <input id="productQuantity" style="height: 30px; padding-left: 10px; width: 50px; text-align: center;" type="number" name="quantity" value="1" min="1">
+                            <input id="productQuantity" style="height: 30px; width: 50px; text-align: center;" type="text" name="quantity" value="1" min="1">
                             <button type="button" onclick="increaseValue()" style="width: 30px; height: 30px;">+</button>
                         </div>
                         <div class="size_products_details">
@@ -50,9 +61,9 @@
                             <button class="addcart">
                                 Thêm vào giỏ hàng
                             </button>
-                            <button class="addfav">Thêm vào danh sách yêu thích</button>
                         </div>
             </form>
+
             <span class="guild_size"><i class="fa-solid fa-star fa-xl"></i> Hướng dẫn chọn size</span>
             <img src="https://theme.hstatic.net/1000387035/1001189662/14/banner_size_image.png?v=75" alt="" width="100%" height="336px">
             <div class="info_product_details">

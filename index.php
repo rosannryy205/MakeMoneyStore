@@ -58,6 +58,9 @@ $router->add("/them-san-pham", ["controller" => "cart", "action" => "add_to_cart
 $router->add("/cart/delete/{id}/{product_id}/{size_id}", ["controller" => "cart", "action" => "delete"]);
 $router->add("/tang_giam_so_luong/{id}/{product_id}/{loai}", ["controller" =>"cart", "action"=>"cartItem"]);
 $router->add("/order/addOrder", ["controller" =>"order", "action"=> "addOrder"]);
+$router->add("/trang-yeu-thich", ["controller" =>"Home", "action"=> "fav"]);
+$router->add("/them-yeu-thich/{id}", ["controller" =>"Home", "action"=> "addfav"]);
+$router->add("/xoa-yeu-thich/{id}", ["controller" =>"Home", "action"=> "deletefav"]);
 
 //Trang Admin
 $router->add("/dashboard", ["controller" => "Admin_Cate", "action" => "index"]);

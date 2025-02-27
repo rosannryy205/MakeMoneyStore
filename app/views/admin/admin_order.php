@@ -4,6 +4,8 @@
         <tr>
             <th>ID</th>
             <th>Tên khách hàng</th>
+            <th>Ảnh sản phẩm</th>
+            <th>Tên sản phẩm</th>
             <th>Ngày đặt</th>
             <th>Số lượng</th>
             <th>Tổng tiền</th>
@@ -15,11 +17,19 @@
             <tr>
                 <td><?= $o['id_cart'] ?></td>
                 <td><?= $o['name'] ?></td>
+                <td>
+                    <img src="<?= _WEB_ROOT_ ?>/public/image_product/<?= $o['image_show'] ?>" alt="Ảnh chính" height="50px" width="50px">
+                </td>
+                <td style="width: 250px;">
+                    <div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 250px;">
+                        <?= $o['name_product'] ?>
+                    </div>
+                </td>
                 <td><?= $o['create_at'] ?></td>
                 <td><?= $o['quantity'] ?></td>
                 <td><?= $o['total_amount'] ?></td>
                 <td><?= $o['trangthai'] ?></td>
-                <td style="display: flex; justify-content: center; gap: 10px">
+                <td>
                     <button style="background-color: #F5CC47;" onclick="location.href='<?= _WEB_ROOT_ ?>/admin/edit_order/<?= $o['id_cart'] ?>'" class="delete-btn" type="submit"><i class="fa-solid fa-pen-to-square" style="color: #ffffff;"></button>
                     <button onclick="location.href='<?= _WEB_ROOT_ ?>/admin/delete_order/<?= $o['id_cart'] ?>'" class="delete-btn" type="button"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></button>
                 </td>

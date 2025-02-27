@@ -35,7 +35,7 @@
                         <i class="fa-regular fa-user fa-xl" style="font-size: 30px;"></i>
                     </a>
                 <?php endif; ?>
-                <a style="color: black" href=""><i class="fa-regular fa-heart fa-xl"></i></a>
+                <a style="color: black" href="<?= _WEB_ROOT_ ?>/trang-yeu-thich"><i class="fa-regular fa-heart fa-xl"></i></a>
                 <a style="color: black" href="<?= _WEB_ROOT_ ?>/gio-hang"><i class="fa-solid fa-bag-shopping fa-xl"></i></a>
             </div>
         </div>

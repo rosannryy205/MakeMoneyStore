@@ -1,5 +1,6 @@
 <main class="main-contentad">
     <h2>Quản lý danh mục</h2>
+    <button style="margin-left: 1230px" onclick="location.href='<?= _WEB_ROOT_ ?>/admin/insert_cate_page'">Thêm danh mục</button>
     <table>
         <tr>
             <th>ID</th>
@@ -31,6 +32,5 @@
         </div>
         <?php unset($_SESSION['success']); ?>
     <?php endif; ?>
-    <button onclick="location.href='<?= _WEB_ROOT_ ?>/admin/insert_cate_page'">Thêm danh mục</button>
 </main>
 </div>

@@ -1,6 +1,6 @@
 <!-- BANNER START -->
 <div class="banner">
-    <img src="https://theme.hstatic.net/1000387035/1001189662/14/collection_banner.jpg?v=75" alt="" width="100%" height="650px">
+    <img src="<?= _WEB_ROOT_ ?>/public/image/upload-19649-2.jpg" alt="" width="100%" height="650px">
 </div>
 <!-- BANNER END -->
 <div id="container2">

@@ -1,6 +1,6 @@
 <!-- BANNER START -->
 <div class="banner">
-    <img src=" <?= _WEB_ROOT_ ?>/public/image/maxresdefault.jpg" alt="" width="100%" height="650px">
+    <img src=" <?= _WEB_ROOT_ ?>/public/image/converse_twist_01.jpg" alt="" width="100%" height="650px">
 </div>
 <div class="bottom_header">
     <div class="bottom_header_content">
@@ -29,14 +29,11 @@
 <!-- START MAIN -->
 <main>
     <div class="title_main">
-        <h2><a href="">Sản phẩm mới</a></h2>
+        <h2><a href="">Sản yêu thích</a></h2>
     </div>
     <div class="main_content">
-        <div class=" item1">
-            <img src="<?= _WEB_ROOT_ ?>/public/image/banner_content.webp" alt="" width="585px" height="390px">
-        </div>
-        <?php foreach ($pros as $pro) {
-            extract($pro) ?>
+        <?php foreach ($fav as $f) {
+            extract($f) ?>
             <div class="item ">
                 <a href="<?= _WEB_ROOT_ ?>/chi-tiet-san-pham/<?= $id ?>">
                     <img src="<?= _WEB_ROOT_ ?>/public/image_product/<?= $image_show ?>" alt="" width="285px" height="273px">
@@ -51,32 +48,6 @@
                 </a>
             </div>
         <?php } ?>
-    </div>
-    <div class="mid_content">
-        <div class="col col1">
-            <img src="<?= _WEB_ROOT_ ?>/public/image/banner_mid_content.webp" alt="" width="350px" height="350px" style="box-shadow: 30px 25px 15px gray;">
-        </div>
-        <div class="col1">
-            <div class="col1_content">
-                <p style="color: gray;">KCONS.VN</p>
-                <div class="tab_content">
-                    <p><a href="">Chúng Tôi Cam Kết Mang Lại Sản Phẩm Chính Hãng Với Giá Tốt Nhất</a></p>
-                </div>
-                <div class="lienhe"><a href="">THÔNG TIN</a><a href="">ĐỊA CHỈ</a><a href="">CHÍNH SÁCH KHÁCH HÀNG</a></div>
-
-                <p style="color: gray;">Với hơn 10 năm (since 2013) kinh nghiệm trong lĩnh vực thời trang giày dép chính hãng, chúng tôi tự tin mang lại cho khách hàng những sản phẩm tuyệt vời nhất, đảm bảo về chất lượng, hợp lý về giá cả. Với 02 chi nhánh tại HCM & Cần Thơ.</p>
-                <div class="button">
-                    <h3>XEM NGAY</h3>
-                </div>
-            </div>
-
-        </div>
-        <div class="col2">
-            <img src="<?= _WEB_ROOT_ ?>/public/image/img_mid_content.jpg" alt="" width="780px" height="420px">
-        </div>
-        <div class="col2">
-            <img src="<?= _WEB_ROOT_ ?>/public/image/img_mid_content2.jpg" alt="" width="750px" height="420px">
-        </div>
     </div>
     <div class="bottom_banner">
         <img src="<?= _WEB_ROOT_ ?>/public/image/banner_bottom.webp" width="100%" height="240px" alt="">

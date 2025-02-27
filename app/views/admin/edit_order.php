@@ -18,7 +18,7 @@
         <input style="width: 400px; height: 50px; border-radius: 30px; padding-left: 20px" type="text" name="sale_percent" value="<?= number_format($order['total_amount'], 0, ',', '.') ?>" disabled>
         <br>
         <label for="">Trạng thái:</label><br>
-        <input style="width: 400px; height: 50px; border-radius: 30px; padding-left: 20px" type="text" name="sale_percent" value="<?= $order['trangthai'] ?>">
+        <input style="width: 400px; height: 50px; border-radius: 30px; padding-left: 20px" type="text" name="sale_percent" value="<?= $order['trangthai'] ?>" disabled>
         <br>
         <?php if (!empty($_SESSION['error'])): ?>
             <div style="color: red; font-weight: bold; margin-bottom: 20px; margin-top: 20px;">

@@ -63,7 +63,16 @@ class Admin_Order_Model extends Model
     }
 
     public function getAllOrder(){
-        $sql = "SELECT c.status as trangthai, c.id as id_cart, c.*, u.* FROM carts c INNER JOIN users u ON c.user_id = u.id";
+        $sql = "SELECT c.status as trangthai, c.id as id_cart, c.*, u.*,cd.product_id,cd.product_sizes_id,p.name AS name_product,p.price,pi.image_show
+                FROM carts c 
+                INNER JOIN users u ON c.user_id = u.id
+                INNER JOIN cart_detail cd ON c.id = cd.id
+                INNER JOIN products p ON cd.product_id = p.id
+                LEFT JOIN product_images pi ON p.id = pi.product_id
+                AND (pi.image_show IS NOT NULL AND pi.image_show <> '')
+                WHERE c.status <> 'gio-hang'
+                ";
+
         return $this ->db->getAll($sql);
     }
 
@@ -97,9 +106,9 @@ class Admin_Order_Model extends Model
         $cancelable = ['gio-hang', 'cho-xac-nhan', 'dang-chuan-bi'];
 
         if (in_array($currentStatus, $cancelable)) {
-            // Nếu status cho phép hủy, thực hiện xóa
+
             $sqlDelete = "DELETE FROM carts WHERE id = ?";
-            return $this->db->update($sqlDelete, [$cart_id]);  // Giả sử update() thực thi query DELETE
+            return $this->db->update($sqlDelete, [$cart_id]);  
         }
 
         return false;
