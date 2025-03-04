@@ -22,10 +22,30 @@ class Cart_Controller extends Controller
         if (isset($_SESSION['user'])) {
             $cart = $order->getProductInCart($_SESSION['user']['id']) ?? [];
         }
-
-        $this->data['page_title'] = 'Giỏ hàng';
+        $this->data['page_title'] = 'Theo dõi đơn hàng';
         $this->data['content'] = 'cart/index';
-        $this->data['sub_content']['cart'] = $cart;
+        $this->data['sub_content'] = [
+            'cart' => $cart,
+        ];
+        $this->render('layout/client', $this->data);
+
+        
+    }
+
+    public function order_tracking()
+    {
+        if (!isset($_SESSION['user'])) {
+            $_SESSION['error'] = "Bạn cần đăng nhập để xem đơn hàng";
+            header("Location:" . _WEB_ROOT_ . "/dang-nhap");
+            exit;
+        }
+
+        $order = $this->cart_model->getAllOrderByUser($_SESSION['user']['id']);
+        $this->data['page_title'] = 'Theo dõi đơn hàng';
+        $this->data['content'] = 'cart/order_tracking';
+        $this->data['sub_content'] = [
+            'order' => $order,
+        ];
         $this->render('layout/client', $this->data);
     }
 

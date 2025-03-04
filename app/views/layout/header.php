@@ -16,7 +16,7 @@
                     </button>
                 </form>
             </div>
-            <div class="icon_top_header">
+            <div class="icon_top_header" style=" width: 130px;">
                 <?php if (isset($_SESSION['user'])): ?>
                     <?php if (!empty($_SESSION['user']['image'])): ?>
                         <!-- Hiển thị ảnh của người dùng nếu có -->
@@ -36,6 +36,7 @@
                     </a>
                 <?php endif; ?>
                 <a style="color: black" href="<?= _WEB_ROOT_ ?>/trang-yeu-thich"><i class="fa-regular fa-heart fa-xl"></i></a>
+                <a style="color: black" href="<?= _WEB_ROOT_ ?>/theo-doi-don-hang"><i class="fa-solid fa-truck-fast fa-xl"></i></a>
                 <a style="color: black" href="<?= _WEB_ROOT_ ?>/gio-hang"><i class="fa-solid fa-bag-shopping fa-xl"></i></a>
             </div>
         </div>

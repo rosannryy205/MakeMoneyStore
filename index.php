@@ -61,6 +61,7 @@ $router->add("/order/addOrder", ["controller" =>"order", "action"=> "addOrder"])
 $router->add("/trang-yeu-thich", ["controller" =>"Home", "action"=> "fav"]);
 $router->add("/them-yeu-thich/{id}", ["controller" =>"Home", "action"=> "addfav"]);
 $router->add("/xoa-yeu-thich/{id}", ["controller" =>"Home", "action"=> "deletefav"]);
+$router->add("/theo-doi-don-hang", ["controller" =>"cart", "action"=> "order_tracking"]);
 
 //Trang Admin
 $router->add("/dashboard", ["controller" => "Admin_Cate", "action" => "index"]);

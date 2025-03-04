@@ -6,6 +6,7 @@
             <th>Tên khách hàng</th>
             <th>Ảnh sản phẩm</th>
             <th>Tên sản phẩm</th>
+            <th>Size</th>
             <th>Ngày đặt</th>
             <th>Số lượng</th>
             <th>Tổng tiền</th>
@@ -23,6 +24,11 @@
                 <td style="width: 250px;">
                     <div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 250px;">
                         <?= $o['name_product'] ?>
+                    </div>
+                </td>
+                <td>
+                    <div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 150px;">
+                        <?= $o['size_name'] ?>
                     </div>
                 </td>
                 <td><?= $o['create_at'] ?></td>

@@ -32,6 +32,5 @@
     ?>
     <script src="<?= _WEB_ROOT_ ?>/public/js/detail.js"></script>
 </body>
+
 </html>
-
-
