@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product</title>
+    <title>Make$ Store</title>
+    <link rel="icon" href="<?= _WEB_ROOT_ ?>/public/image/logo.png" type="image/png">
     <link rel="stylesheet" href="<?= _WEB_ROOT_ ?>/public/css/index.css">
     <link rel="stylesheet" href="<?= _WEB_ROOT_ ?>/public/css/login.css">
     <link rel="stylesheet" href="<?= _WEB_ROOT_ ?>/public/css/forgot.css">
