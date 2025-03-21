@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th2 23, 2025 lúc 02:43 AM
+-- Thời gian đã tạo: Th3 21, 2025 lúc 01:26 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
--- Phiên bản PHP: 8.0.30
+-- Phiên bản PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -53,16 +53,17 @@ INSERT INTO `carts` (`id`, `user_id`, `quantity`, `total_amount`, `create_at`, `
 CREATE TABLE `cart_detail` (
   `id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
+  `product_sizes_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL DEFAULT 1,
-  `price` int(11) NOT NULL DEFAULT 0
+  `price` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `cart_detail`
 --
 
-INSERT INTO `cart_detail` (`id`, `product_id`, `quantity`, `price`) VALUES
-(11, 57, 1, 0);
+INSERT INTO `cart_detail` (`id`, `product_id`, `product_sizes_id`, `quantity`, `price`) VALUES
+(10, 57, 79, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -88,6 +89,19 @@ INSERT INTO `categories` (`id`, `name`, `created_at`, `update_at`) VALUES
 (6, 'Chính Sách Khách Hàng', '2025-01-18 12:59:39', '2025-01-18 12:59:39'),
 (7, 'Ưu đãi', '2025-01-18 12:59:39', '2025-01-18 12:59:39'),
 (10, 'Ưu đãi cực sốc', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `fav_products`
+--
+
+CREATE TABLE `fav_products` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -220,7 +234,7 @@ INSERT INTO `product_images` (`id`, `product_id`, `image_url`, `image_show`) VAL
 CREATE TABLE `product_sizes` (
   `id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL COMMENT 'liên kết sản phẩm',
-  `size` varchar(100) NOT NULL,
+  `size_id` int(11) NOT NULL,
   `stock` int(11) NOT NULL COMMENT 'số lượng tồn kho',
   `created_at` datetime NOT NULL COMMENT 'ngày tạo',
   `updated_at` datetime NOT NULL COMMENT 'ngày cập nhật'
@@ -230,62 +244,77 @@ CREATE TABLE `product_sizes` (
 -- Đang đổ dữ liệu cho bảng `product_sizes`
 --
 
-INSERT INTO `product_sizes` (`id`, `product_id`, `size`, `stock`, `created_at`, `updated_at`) VALUES
-(8, 2, '3 UK - 35 EUR - 22 cm', 5, '2025-01-19 09:04:07', '2025-01-19 09:04:07'),
-(9, 2, '3.5 UK - 36 EUR - 22.5 cm', 12, '2025-01-19 09:04:07', '2025-01-19 09:04:07'),
-(10, 2, '4.5 UK - 37 EUR - 23.5 cm', 13, '2025-01-19 09:04:07', '2025-01-19 09:04:07'),
-(11, 2, '5.5 UK - 38 EUR - 24.5 cm', 6, '2025-01-19 09:04:07', '2025-01-19 09:04:07'),
-(12, 2, '6 UK - 39 EUR - 24.5 cm', 7, '2025-01-19 09:04:07', '2025-01-19 09:04:07'),
-(13, 3, '3.5 UK - 36 EUR - 22.5 cm', 14, '2025-01-19 09:04:07', '2025-01-19 09:04:07'),
-(14, 3, '4.5 UK - 37 EUR - 23.5 cm', 5, '2025-01-19 09:04:07', '2025-01-19 09:04:07'),
-(15, 3, '5.5 UK - 38 EUR - 24.5 cm', 5, '2025-01-19 09:04:07', '2025-01-19 09:04:07'),
-(16, 3, '7 UK - 40 EUR - 25.5 cm', 11, '2025-01-19 09:04:07', '2025-01-19 09:04:07'),
-(17, 3, '7.5 UK - 41 EUR - 26 cm', 7, '2025-01-19 09:04:07', '2025-01-19 09:04:07'),
-(18, 3, '8.5 UK - 42 EUR - 27 cm', 9, '2025-01-19 09:04:07', '2025-01-19 09:04:07'),
-(19, 5, '3 UK - 35 EUR - 22 cm', 12, '2025-01-19 09:04:07', '2025-01-19 09:04:07'),
-(20, 5, '3.5 UK - 36 EUR - 22.5 cm', 13, '2025-01-19 09:04:07', '2025-01-19 09:04:07'),
-(21, 5, '5 UK - 37.5 EUR - 24 cm', 12, '2025-01-19 09:04:07', '2025-01-19 09:04:07'),
-(22, 5, '5.5 UK - 38 EUR - 24.5 cm', 12, '2025-01-19 09:04:07', '2025-01-19 09:04:07'),
-(23, 5, '7 UK - 40 EUR - 25.5 cm', 11, '2025-01-19 09:04:07', '2025-01-19 09:04:07'),
-(24, 5, '7.5 UK - 41 EUR - 26 cm', 9, '2025-01-19 09:04:07', '2025-01-19 09:04:07'),
-(25, 55, '3.5 UK - 36 EUR - 22.5 cm', 12, '2025-01-19 09:04:07', '2025-01-19 09:04:07'),
-(26, 55, '4.5 UK - 37 EUR - 23.5 cm', 5, '2025-01-19 09:04:07', '2025-01-19 09:04:07'),
-(27, 55, '5.5 UK - 38 EUR - 24.5 cm', 11, '2025-01-19 09:04:07', '2025-01-19 09:04:07'),
-(28, 55, '6 UK - 39 EUR - 24.5 cm', 5, '2025-01-19 09:04:07', '2025-01-19 09:04:07'),
-(29, 55, '7 UK - 40 EUR - 25.5 cm', 9, '2025-01-19 09:04:07', '2025-01-19 09:04:07'),
-(30, 55, '7.5 UK - 41 EUR - 26 cm', 5, '2025-01-19 09:04:07', '2025-01-19 09:04:07'),
-(31, 55, '8.5 UK - 42 EUR - 27 cm', 12, '2025-01-19 09:04:07', '2025-01-19 09:04:07'),
-(32, 55, '9.5 UK - 43 EUR - 28 cm', 11, '2025-01-19 09:04:07', '2025-01-19 09:04:07'),
-(33, 55, '10 UK - 44 EUR - 28.5 cm', 10, '2025-01-19 09:04:07', '2025-01-19 09:04:07'),
-(34, 57, '8.5 UK - 42 EUR - 27 cm', 12, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(35, 57, '9.5 UK - 43 EUR - 28 cm', 9, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(36, 57, '10 UK - 44 EUR - 28.5 cm', 5, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(37, 58, '4 UK - 36.5 EUR - 23 cm', 5, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(38, 58, '4.5 UK - 37 EUR - 23.5 cm', 6, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(39, 58, '5 UK - 37.5 EUR - 24 cm', 7, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(40, 58, '5.5 UK - 38 EUR - 24.5 cm', 9, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(41, 58, '6 UK - 39 EUR - 24.5 cm', 7, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(42, 58, '6.5 UK - 39.5 EUR - 25 cm', 9, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(43, 59, '37.5', 8, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(44, 59, '38', 8, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(45, 59, '38.5', 9, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(46, 59, '39', 12, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(47, 60, '4 UK - 36.5 EUR - 23 cm', 5, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(48, 60, '4.5 UK - 37 EUR - 23.5 cm', 7, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(49, 60, '5 UK - 37.5 EUR - 24 cm', 8, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(50, 60, '5.5 UK - 38 EUR - 24.5 cm', 9, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(51, 60, '6 UK - 39 EUR - 24.5 cm', 8, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(52, 60, '6.5 UK - 39.5 EUR - 25 cm', 9, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(53, 60, '7 UK - 40 EUR - 25.5 cm', 9, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(54, 60, '7.5 UK - 41 EUR - 26 cm', 13, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(55, 60, '8 UK - 41.5 EUR - 26.5 cm', 22, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(56, 60, '8.5 UK - 42 EUR - 27 cm', 22, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(57, 61, '7 UK - 40 EUR - 25.5 cm', 23, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(58, 61, '7.5 UK - 41 EUR - 26 cm', 12, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(59, 61, '8.5 UK - 42 EUR - 27 cm', 3, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(60, 61, '9.5 UK - 43 EUR - 28 cm\r\n', 6, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(61, 61, '10 UK - 44 EUR - 28.5 cm', 12, '2025-01-19 10:14:23', '2025-01-19 10:14:23'),
-(62, 61, '10.5 UK - 44.5 EUR - 29 cm', 22, '2025-01-19 10:14:23', '2025-01-19 10:14:23');
+INSERT INTO `product_sizes` (`id`, `product_id`, `size_id`, `stock`, `created_at`, `updated_at`) VALUES
+(63, 2, 1, 15, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(64, 2, 3, 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(65, 2, 6, 12, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(66, 2, 9, 18, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(67, 2, 12, 14, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(68, 3, 2, 17, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(69, 3, 4, 11, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(70, 3, 5, 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(71, 3, 10, 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(72, 3, 13, 20, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(73, 55, 1, 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(74, 55, 2, 16, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(75, 55, 5, 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(76, 55, 7, 12, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(77, 55, 11, 18, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(78, 57, 3, 12, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(79, 57, 4, 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(80, 57, 6, 15, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(81, 57, 8, 14, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(82, 57, 12, 20, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(83, 58, 2, 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(84, 58, 4, 18, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(85, 58, 5, 12, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(86, 58, 9, 16, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(87, 58, 13, 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(88, 59, 1, 17, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(89, 59, 3, 12, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(90, 59, 6, 20, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(91, 59, 10, 14, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(92, 59, 11, 15, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(93, 60, 2, 18, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(94, 60, 4, 14, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(95, 60, 7, 11, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(96, 60, 8, 20, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(97, 60, 12, 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(98, 61, 3, 16, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(99, 61, 5, 19, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(100, 61, 6, 13, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(101, 61, 9, 12, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(102, 61, 13, 17, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `sizes`
+--
+
+CREATE TABLE `sizes` (
+  `id` int(11) NOT NULL,
+  `size_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `sizes`
+--
+
+INSERT INTO `sizes` (`id`, `size_name`) VALUES
+(1, '0 UK - 32 EUR - 20 cm'),
+(2, '0.5 UK - 33 EUR - 20.5 cm'),
+(3, '1 UK - 34 EUR - 21 cm'),
+(4, '1.5 UK - 35 EUR - 21.5 cm'),
+(5, '2 UK - 36 EUR - 22 cm'),
+(6, '2.5 UK - 37 EUR - 22.5 cm'),
+(7, '3 UK - 38 EUR - 23 cm'),
+(8, '3.5 UK - 39 EUR - 23.5 cm'),
+(9, '4 UK - 40 EUR - 24 cm'),
+(10, '4.5 UK - 41 EUR - 24.5 cm'),
+(11, '5 UK - 42 EUR - 25 cm'),
+(12, '5.5 UK - 43 EUR - 25.5 cm'),
+(13, '6 UK - 44 EUR - 26 cm');
 
 -- --------------------------------------------------------
 
@@ -333,14 +362,23 @@ ALTER TABLE `carts`
 -- Chỉ mục cho bảng `cart_detail`
 --
 ALTER TABLE `cart_detail`
-  ADD PRIMARY KEY (`id`,`product_id`),
-  ADD KEY `product_id` (`product_id`);
+  ADD PRIMARY KEY (`id`,`product_id`,`product_sizes_id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `cart_detail_ibfk_2` (`product_sizes_id`);
 
 --
 -- Chỉ mục cho bảng `categories`
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Chỉ mục cho bảng `fav_products`
+--
+ALTER TABLE `fav_products`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `product_id` (`product_id`);
 
 --
 -- Chỉ mục cho bảng `products`
@@ -361,7 +399,14 @@ ALTER TABLE `product_images`
 --
 ALTER TABLE `product_sizes`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `product_id` (`product_id`);
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `size_id` (`size_id`);
+
+--
+-- Chỉ mục cho bảng `sizes`
+--
+ALTER TABLE `sizes`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Chỉ mục cho bảng `users`
@@ -386,6 +431,12 @@ ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
+-- AUTO_INCREMENT cho bảng `fav_products`
+--
+ALTER TABLE `fav_products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
@@ -401,7 +452,13 @@ ALTER TABLE `product_images`
 -- AUTO_INCREMENT cho bảng `product_sizes`
 --
 ALTER TABLE `product_sizes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+
+--
+-- AUTO_INCREMENT cho bảng `sizes`
+--
+ALTER TABLE `sizes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
@@ -423,8 +480,15 @@ ALTER TABLE `carts`
 -- Các ràng buộc cho bảng `cart_detail`
 --
 ALTER TABLE `cart_detail`
-  ADD CONSTRAINT `cart_detail_ibfk_1` FOREIGN KEY (`id`) REFERENCES `carts` (`id`),
-  ADD CONSTRAINT `cart_detail_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+  ADD CONSTRAINT `cart_detail_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  ADD CONSTRAINT `cart_detail_ibfk_2` FOREIGN KEY (`product_sizes_id`) REFERENCES `product_sizes` (`id`);
+
+--
+-- Các ràng buộc cho bảng `fav_products`
+--
+ALTER TABLE `fav_products`
+  ADD CONSTRAINT `fav_products_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fav_products_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
 
 --
 -- Các ràng buộc cho bảng `products`
@@ -442,7 +506,8 @@ ALTER TABLE `product_images`
 -- Các ràng buộc cho bảng `product_sizes`
 --
 ALTER TABLE `product_sizes`
-  ADD CONSTRAINT `product_sizes_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`);
+  ADD CONSTRAINT `product_sizes_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
+  ADD CONSTRAINT `product_sizes_ibfk_2` FOREIGN KEY (`size_id`) REFERENCES `sizes` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
