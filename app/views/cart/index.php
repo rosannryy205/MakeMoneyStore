@@ -79,4 +79,36 @@
     <input type="hidden" name="so_luong" value="<?= $tong_sp ?>">
 </form>
 
+
+<style>
+    .main_cart {
+        width: 80%;
+        margin: auto;
+        font-family: Arial, sans-serif;
+    }
+    .item_cart {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        gap: 20px;
+    }
+    .item_cart img {
+        border-radius: 5px;
+    }
+    .in4_item {
+        flex: 1;
+        overflow: hidden;
+    }
+    .in4_item h3 {
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .delete {
+        text-align: center;
+    }
+</style>
+
 <!-- END CART -->

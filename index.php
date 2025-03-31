@@ -107,7 +107,6 @@ $router->add("/admin/insert_cate", ["controller" => "Admin_Cate", "action" => "i
 // Xử lý URL request
 $request_uri = $_SERVER['REQUEST_URI'];
 $path = str_replace('/MAKE_MONEY', '', $request_uri);
-
 $params = $router->match($path);
 if ($params === false) {
   exit("404 - Not Found!");

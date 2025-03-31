@@ -47,3 +47,34 @@
         <?php unset($_SESSION['success']); ?>
     <?php endif; ?>
 </main>
+
+<style>
+    table {
+        width: 80%;
+        border-collapse: collapse;
+        margin: 20px auto;
+        font-family: Arial, sans-serif;
+        background: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    th, td {
+        padding: 12px;
+        text-align: center;
+    }
+    th {
+        background: #f10909;
+        color: #fff;
+        text-transform: uppercase;
+    }
+    tr:nth-child(even) {
+        background: #f9f9f9;
+    }
+    tr:hover {
+        background: #f1f1f1;
+    }
+    img {
+        border-radius: 5px;
+    }
+</style>
