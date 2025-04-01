@@ -149,7 +149,7 @@ class CartModel extends Model
 
     public function deleteCartItem($id, $product_id, $size_id)
     {
-        $sql = "DELETE FROM cart_detail WHERE id = ? AND product_id = ? AND size_id = ?";
+        $sql = "DELETE FROM cart_detail WHERE id = ? AND product_id = ? AND product_sizes_id = ?";
         $params = [
             $id,
             $product_id,
